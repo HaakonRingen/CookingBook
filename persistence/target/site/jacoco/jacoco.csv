@@ -1,0 +1,14 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+persistence,persistence,RecipeDeserializer,21,156,11,19,5,35,12,6,1,2
+persistence,persistence,StudentDeserializer,12,110,14,14,2,28,15,2,1,2
+persistence,persistence,UserDeserializer,2,59,3,5,1,15,3,4,0,3
+persistence,persistence,StudentSerializer,0,28,0,0,0,8,0,2,0,2
+persistence,persistence,BookStudentModule,0,81,0,0,0,13,0,2,0,2
+persistence,persistence,UserSerializer,0,27,0,2,0,9,0,3,0,2
+persistence,persistence,UsersHandler,0,66,0,0,0,15,0,5,0,5
+persistence,persistence,IngredientDeserializer,12,67,8,8,3,14,9,2,1,2
+persistence,persistence,RecipeSerializer,0,43,0,2,0,12,0,3,0,2
+persistence,persistence,IngredientSerializer,0,23,0,0,0,7,0,2,0,2
+persistence,persistence,BookDeserializer,12,49,3,5,3,13,4,3,1,2
+persistence,persistence,BookStudentModule.new VersionUtil() {...},0,3,0,0,0,1,0,1,0,1
+persistence,persistence,BookSerializer,0,27,0,2,0,9,0,3,0,2

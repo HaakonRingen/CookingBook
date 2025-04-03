@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IngredientDeserializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">IngredientDeserializer.java</span></div><h1>IngredientDeserializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import core.Ingredient;
+import java.io.IOException;
+
+
+
+/**
+ * Custom deserializer for Ingredient objects.
+ */
+<span class="fc" id="L19">public class IngredientDeserializer extends JsonDeserializer&lt;Ingredient&gt; {</span>
+
+    private String name;
+    private Float amount;
+    private String unit;
+
+    @Override
+    public Ingredient deserialize(JsonParser p, DeserializationContext ctxt) 
+            throws IOException, JacksonException {
+<span class="nc" id="L28">        TreeNode treenode = p.getCodec().readTree(p);</span>
+
+<span class="nc" id="L30">        return deserialize((JsonNode) treenode);</span>
+        
+    }
+
+
+    /**
+     * Deserializes a JSON node into an Ingredient object.
+     *
+     * @param node the JSON node to deserialize
+     * @return an Ingredient object if the JSON node contains valid data, otherwise null
+     */
+    public Ingredient deserialize(JsonNode node) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (node instanceof ObjectNode) {</span>
+<span class="fc" id="L43">            ObjectNode objectNode = (ObjectNode) node;</span>
+
+<span class="fc" id="L45">            JsonNode textnode = objectNode.get(&quot;ingredient&quot;);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">            if (textnode instanceof TextNode) {</span>
+<span class="fc" id="L47">                name = ((TextNode) textnode).asText();</span>
+            }
+<span class="fc" id="L49">            JsonNode amountnode = objectNode.get(&quot;amount&quot;);</span>
+<span class="pc bpc" id="L50" title="2 of 4 branches missed.">            if (amountnode != null &amp;&amp; amountnode.isNumber()) {</span>
+<span class="fc" id="L51">                amount = amountnode.floatValue();</span>
+            }
+<span class="fc" id="L53">            JsonNode unitnode = objectNode.get(&quot;unit&quot;);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if (unitnode instanceof TextNode) {</span>
+<span class="fc" id="L55">                unit = ((TextNode) unitnode).asText();</span>
+            }
+
+<span class="pc bpc" id="L58" title="3 of 6 branches missed.">            if  (name != null &amp;&amp; amount != null &amp;&amp; unit != null) {</span>
+<span class="fc" id="L59">                return new Ingredient(name, amount, unit);</span>
+            }
+
+        }
+    
+<span class="nc" id="L64">        return null;</span>
+    }
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

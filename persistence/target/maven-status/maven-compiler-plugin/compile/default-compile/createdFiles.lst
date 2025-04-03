@@ -1,0 +1,14 @@
+persistence/IngredientDeserializer.class
+persistence/BookStudentModule.class
+persistence/UserDeserializer.class
+persistence/RecipeDeserializer.class
+persistence/BookStudentModule$1.class
+persistence/UserSerializer.class
+persistence/IngredientSerializer.class
+persistence/BookDeserializer.class
+persistence/BookSerializer.class
+persistence/StudentDeserializer.class
+module-info.class
+persistence/UsersHandler.class
+persistence/StudentSerializer.class
+persistence/RecipeSerializer.class

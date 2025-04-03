@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StudentDeserializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">StudentDeserializer.java</span></div><h1>StudentDeserializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import core.Book;
+import core.Student;
+import java.io.IOException;
+
+/**
+ * Custom deserializer for {@link Student} objects.
+ */
+<span class="fc" id="L19">public class StudentDeserializer extends JsonDeserializer&lt;Student&gt; {</span>
+
+    @Override
+    public Student deserialize(JsonParser p, DeserializationContext ctxt) 
+            throws IOException, JacksonException {
+<span class="nc" id="L24">        TreeNode treeNode = p.getCodec().readTree(p);</span>
+<span class="nc" id="L25">        return deserialize((JsonNode) treeNode);</span>
+    }
+
+    /**
+     * Deserializes a {@link JsonNode} into a {@link Student} object.
+     *
+     * @param node the JSON node to deserialize
+     * @return the deserialized Student object
+     */
+    public Student deserialize(JsonNode node) {
+<span class="fc" id="L35">        Student student = null;</span>
+<span class="fc" id="L36">        BookDeserializer bookDeserializer = new BookDeserializer();</span>
+
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (node instanceof ObjectNode) {</span>
+<span class="fc" id="L39">            ObjectNode objectNode = (ObjectNode) node;</span>
+
+            // Deserialize name
+<span class="fc" id="L42">            String name = null;</span>
+<span class="fc" id="L43">            JsonNode nameNode = objectNode.get(&quot;name&quot;);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">            if (nameNode instanceof TextNode) {</span>
+<span class="fc" id="L45">                name = nameNode.asText();</span>
+            }
+
+            // Deserialize ID
+<span class="fc" id="L49">            int id = 0;</span>
+<span class="fc" id="L50">            JsonNode idNode = objectNode.get(&quot;ID&quot;);</span>
+<span class="pc bpc" id="L51" title="2 of 4 branches missed.">            if (idNode != null &amp;&amp; idNode.isNumber()) {</span>
+<span class="fc" id="L52">                id = idNode.intValue();</span>
+            }
+
+            // Deserialize password
+<span class="fc" id="L56">            String password = null;</span>
+<span class="fc" id="L57">            JsonNode passwordNode = objectNode.get(&quot;password&quot;);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            if (passwordNode instanceof TextNode) {</span>
+<span class="fc" id="L59">                password = passwordNode.asText();</span>
+            }
+
+            // Create student if all required fields are present
+<span class="pc bpc" id="L63" title="3 of 6 branches missed.">            if (name != null &amp;&amp; id != 0 &amp;&amp; password != null) {</span>
+<span class="fc" id="L64">                String[] nameParts = name.split(&quot; &quot;);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                String firstName = nameParts.length &gt; 0 ? nameParts[0] : null;</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                String lastName = nameParts.length &gt; 1 ? nameParts[1] : null;</span>
+<span class="fc" id="L67">                student = new Student(firstName, lastName, id, password);</span>
+            }
+
+            // Deserialize cookingbook (optional)
+<span class="fc" id="L71">            JsonNode bookNode = objectNode.get(&quot;cookingbook&quot;);</span>
+<span class="pc bpc" id="L72" title="3 of 6 branches missed.">            if (bookNode != null &amp;&amp; bookNode instanceof ObjectNode &amp;&amp; student != null) {</span>
+<span class="fc" id="L73">                Book book = bookDeserializer.deserialize(bookNode);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">                if (book != null) {</span>
+<span class="fc" id="L75">                    student.setCookingbook(book);</span>
+                }
+            }
+        }
+
+<span class="fc" id="L80">        return student;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

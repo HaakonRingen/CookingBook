@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StudentSerializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">StudentSerializer.java</span></div><h1>StudentSerializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import core.Student;
+import java.io.IOException;
+
+/**
+ * A custom serializer for Student objects.
+ */
+<span class="fc" id="L12">public class StudentSerializer extends JsonSerializer&lt;Student&gt; {</span>
+    
+    /**
+     * Serializes a student object to JSON.
+     * 
+     * @param student the student object to serialize
+     * @param gen the JSON generator used to write JSON content
+     * @param serializers the serializer provider
+     * @throws IOException if an I/O error occurs
+     */
+
+    @Override
+    public void serialize(Student student, JsonGenerator gen, SerializerProvider serializers) 
+        throws IOException {
+<span class="fc" id="L26">        gen.writeStartObject();</span>
+<span class="fc" id="L27">        gen.writeStringField(&quot;name&quot;, student.getFullName());</span>
+<span class="fc" id="L28">        gen.writeNumberField(&quot;ID&quot;, student.getId());</span>
+<span class="fc" id="L29">        gen.writeStringField(&quot;password&quot;, student.getPassword());</span>
+<span class="fc" id="L30">        gen.writeObjectField(&quot;cookingbook&quot;, student.getCookingbook());</span>
+<span class="fc" id="L31">        gen.writeEndObject();</span>
+<span class="fc" id="L32">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

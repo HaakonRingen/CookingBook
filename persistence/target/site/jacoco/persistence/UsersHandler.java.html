@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsersHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">UsersHandler.java</span></div><h1>UsersHandler.java</h1><pre class="source lang-java linenums">package persistence;
+
+
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import core.Student;
+import core.Users;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Handles the persistence of Users data, including reading from and writing to a JSON file.
+ */
+public class UsersHandler {
+
+    private File savedRecipesFile;
+    private ObjectMapper mapper;
+    
+    /**
+     * Constructs a new UsersHandler and initializes the JSON file and ObjectMapper.
+     */
+<span class="fc" id="L25">    public UsersHandler() {</span>
+<span class="fc" id="L26">        savedRecipesFile = new File(&quot;SavedUsers.json&quot;);</span>
+<span class="fc" id="L27">        mapper = new ObjectMapper();</span>
+<span class="fc" id="L28">        mapper.registerModule(new BookStudentModule());</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Constructs a new UsersHandler and initializes the JSON file and ObjectMapper.
+     * @param filename the name of the file to be used for reading and writing
+     */
+<span class="fc" id="L35">    public UsersHandler(String filename) {</span>
+<span class="fc" id="L36">        savedRecipesFile = new File(filename);</span>
+<span class="fc" id="L37">        mapper = new ObjectMapper();</span>
+<span class="fc" id="L38">        mapper.registerModule(new BookStudentModule());</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Sets the filename to be used for reading and writing.
+     *
+     * @param filename the name of the file to be used for reading and writing
+     */
+    public void setFilename(String filename) {
+<span class="fc" id="L47">        savedRecipesFile = new File(filename);</span>
+<span class="fc" id="L48">    }</span>
+
+   
+    /**
+     * Writes the given Users object to a file using a pretty printer format.
+     *
+     * @param users the Users object to be written to the file
+     * @throws StreamWriteException if there is an error during the writing process
+     * @throws DatabindException if there is an error related to data binding
+     * @throws IOException if an I/O error occurs
+     */
+    public void write(Users users) throws StreamWriteException, DatabindException, IOException {
+<span class="fc" id="L60">        mapper.writerWithDefaultPrettyPrinter().writeValue(savedRecipesFile, users);</span>
+<span class="fc" id="L61">    }</span>
+    
+    /**
+     * Reads the JSON file and returns a list of Student objects.
+     *
+     * @return an ArrayList of Student objects read from the file
+     * @throws StreamReadException if there is an error during reading from the file
+     * @throws DatabindException if there is an error in data binding
+     * @throws IOException if there is an I/O error
+     */
+    public ArrayList&lt;Student&gt; read() throws StreamReadException, DatabindException, IOException {
+<span class="fc" id="L72">        return mapper.readValue(savedRecipesFile, Users.class).getUsers();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

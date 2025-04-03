@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeSerializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">RecipeSerializer.java</span></div><h1>RecipeSerializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import core.Ingredient;
+import core.Recipe;
+import java.io.IOException;
+
+/**
+ * A custom serializer for {@link Recipe} objects.
+ */
+<span class="fc" id="L14">public class RecipeSerializer extends JsonSerializer&lt;Recipe&gt; {</span>
+
+  
+    /**
+     * Serializes a Recipe object into JSON format.
+     *
+     * @param recipe the Recipe object to serialize
+     * @param gen the JsonGenerator used to write JSON content
+     * @param serializers the SerializerProvider that can be used to get serializers for 
+     *                    serializing Objects value
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    public void serialize(
+        Recipe recipe, 
+        JsonGenerator gen, 
+        SerializerProvider serializers
+    ) throws IOException {
+<span class="fc" id="L32">        gen.writeStartObject();</span>
+<span class="fc" id="L33">        gen.writeStringField(&quot;name&quot;, recipe.getNavn());</span>
+<span class="fc" id="L34">        gen.writeStringField(&quot;type&quot;, recipe.getType());</span>
+<span class="fc" id="L35">        gen.writeStringField(&quot;tutorial&quot;, recipe.getTutorial());</span>
+
+<span class="fc" id="L37">        gen.writeArrayFieldStart(&quot;ingredients&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Ingredient ingredient : recipe.getIngredients()) {</span>
+<span class="fc" id="L39">            gen.writeObject(ingredient);</span>
+<span class="fc" id="L40">        }</span>
+<span class="fc" id="L41">        gen.writeEndArray();</span>
+<span class="fc" id="L42">        gen.writeEndObject();</span>
+<span class="fc" id="L43">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

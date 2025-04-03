@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeDeserializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">RecipeDeserializer.java</span></div><h1>RecipeDeserializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import core.Breakfast;
+import core.Dessert;
+import core.Dinner;
+import core.Ingredient;
+import core.Lunch;
+import core.Recipe;
+import java.io.IOException;
+import java.util.ArrayList;
+
+
+/**
+ * Custom deserializer for Recipe objects.
+ */
+<span class="fc" id="L26">public class RecipeDeserializer extends JsonDeserializer&lt;Recipe&gt; {</span>
+
+    private String name;
+    private String tutorial;
+    private String type;
+
+<span class="fc" id="L32">    private IngredientDeserializer ingredientDeserializer = new IngredientDeserializer();</span>
+
+    /**
+     * Deserializes JSON content into a Recipe object.
+     *
+     * @param p the JSON parser
+     * @param ctxt the deserialization context
+     * @return the deserialized Recipe object
+     * @throws IOException if an I/O error occurs
+     * @throws JacksonException if a Jackson error occurs
+     */
+    @Override
+    public Recipe deserialize(JsonParser p, DeserializationContext ctxt) 
+            throws IOException, JacksonException {
+<span class="nc" id="L46">        TreeNode treenode = p.getCodec().readTree(p);</span>
+<span class="nc" id="L47">        return deserialize((JsonNode) treenode);</span>
+    }
+
+    /**
+     * Deserializes a JsonNode into a Recipe object.
+     *
+     * @param node the JsonNode to deserialize
+     * @return the deserialized Recipe object, or null if deserialization fails
+     */
+    public Recipe deserialize(JsonNode node) {
+
+<span class="fc" id="L58">        ArrayList&lt;Ingredient&gt; ingredients = new ArrayList&lt;&gt;();</span>
+        
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (node instanceof ObjectNode) {</span>
+<span class="fc" id="L61">            ObjectNode objectNode = (ObjectNode) node;</span>
+
+<span class="fc" id="L63">            JsonNode textNode = objectNode.get(&quot;name&quot;);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (textNode instanceof TextNode) {</span>
+<span class="fc" id="L65">                name = ((TextNode) textNode).asText();</span>
+            }
+<span class="fc" id="L67">            JsonNode typeNode = objectNode.get(&quot;type&quot;);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">            if (typeNode instanceof TextNode) {</span>
+<span class="fc" id="L69">                type = ((TextNode) typeNode).asText();</span>
+            }
+
+<span class="fc" id="L72">            JsonNode tutorialNode = objectNode.get(&quot;tutorial&quot;);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (tutorialNode instanceof TextNode) {</span>
+<span class="fc" id="L74">                tutorial = ((TextNode) tutorialNode).asText();</span>
+            }
+
+<span class="fc" id="L77">            JsonNode ingredientsNode = objectNode.get(&quot;ingredients&quot;);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (ingredientsNode instanceof ArrayNode) {</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                for (JsonNode element : (ArrayNode) ingredientsNode) {</span>
+<span class="fc" id="L80">                    Ingredient ingredient = ingredientDeserializer.deserialize(element);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">                    if (ingredient != null) {</span>
+<span class="fc" id="L82">                        ingredients.add(ingredient);</span>
+                    }
+<span class="fc" id="L84">                }</span>
+            }
+
+<span class="pc bpc" id="L87" title="3 of 6 branches missed.">            if (name != null &amp;&amp; tutorial != null &amp;&amp; !ingredients.isEmpty()) {</span>
+<span class="fc" id="L88">                Recipe recipe = null;</span>
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                if (type.equals(&quot;Breakfast&quot;)) {</span>
+<span class="fc" id="L91">                    recipe = new Breakfast(name);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                } else if (type.equals(&quot;Lunch&quot;)) {</span>
+<span class="fc" id="L93">                    recipe = new Lunch(name);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                } else if (type.equals(&quot;Dinner&quot;)) {</span>
+<span class="nc" id="L95">                    recipe = new Dinner(name);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">                } else if (type.equals(&quot;Dessert&quot;)) {</span>
+<span class="fc" id="L97">                    recipe = new Dessert(name);</span>
+                } else {
+<span class="nc" id="L99">                    return null;</span>
+                }
+
+<span class="fc" id="L102">                recipe.setTutorial(tutorial);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                for (Ingredient i : ingredients) {</span>
+<span class="fc" id="L104">                    recipe.addIngredient(i);</span>
+<span class="fc" id="L105">                }</span>
+<span class="fc" id="L106">                return recipe;</span>
+            }
+        }
+<span class="nc" id="L109">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDeserializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persistence</a> &gt; <a href="index.source.html" class="el_package">persistence</a> &gt; <span class="el_source">UserDeserializer.java</span></div><h1>UserDeserializer.java</h1><pre class="source lang-java linenums">package persistence;
+
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import core.Student;
+import core.Users;
+import java.io.IOException;
+
+/**
+ * Custom deserializer for {@link Users} objects.
+ */
+<span class="fc" id="L18">public class UserDeserializer extends JsonDeserializer&lt;Users&gt; {</span>
+
+
+
+<span class="fc" id="L22">    private StudentDeserializer studentDeserializer = new StudentDeserializer();</span>
+    
+    /**
+     * Deserializes JSON content into a {@link Users} object.
+     *
+     * @param p the JSON parser
+     * @param ctxt the deserialization context
+     * @return the deserialized {@link Users} object
+     * @throws IOException if an I/O error occurs
+     * @throws JacksonException if a Jackson error occurs
+     */
+    @Override
+    public Users deserialize(JsonParser p, DeserializationContext ctxt) 
+        throws IOException, JacksonException {
+<span class="fc" id="L36">        TreeNode treeNode = p.getCodec().readTree(p);</span>
+<span class="fc" id="L37">        return deserialize((JsonNode) treeNode);</span>
+    }
+
+    /**
+     * Deserializes a {@link JsonNode} into a {@link Users} object.
+     *
+     * @param node the JSON node
+     * @return the deserialized {@link Users} object, or null if the node is not an ObjectNode
+     */
+    public Users deserialize(JsonNode node) {
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (node instanceof ObjectNode) {</span>
+<span class="fc" id="L48">            ObjectNode objectNode = (ObjectNode) node;</span>
+
+<span class="fc" id="L50">            Users users = new Users();</span>
+
+<span class="fc" id="L52">            JsonNode recipesNode = objectNode.get(&quot;users&quot;);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">            if (recipesNode instanceof ArrayNode) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                for (JsonNode element : (ArrayNode) recipesNode) {</span>
+<span class="fc" id="L55">                    Student student = studentDeserializer.deserialize(element);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">                    if (student != null) {</span>
+<span class="fc" id="L57">                        users.addUser(student);</span>
+                    }
+<span class="fc" id="L59">                }</span>
+            }
+<span class="fc" id="L61">            return users;</span>
+        }
+<span class="nc" id="L63">        return null;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

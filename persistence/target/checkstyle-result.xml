@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.3.4">
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/BookDeserializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/StudentDeserializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/StudentSerializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/UserDeserializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/IngredientDeserializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/RecipeSerializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/RecipeDeserializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/BookStudentModule.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/UserSerializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/IngredientSerializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/UsersHandler.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/main/java/persistence/BookSerializer.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/test/java/persistence/UsersHandlerTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/persistence/src/test/java/persistence/BookStudentModuleTest.java">
+</file>
+</checkstyle>
