@@ -1,405 +1,67 @@
-# 🍲 Kokebok for matoppskrifter (Cookingbook)
+# Oversikt Java-fx modul:
 
-Matlaging er en aktivitet mange setter pris på, enten det er for daglige måltider eller spesielle anledninger. Med et mangfold av oppskrifter tilgjengelig på nettet og i bøker, kan det være utfordrende å holde oversikt over favorittoppskriftene, ingrediensene og tilberedningstidene. Kokebokappen vår har som mål å forenkle denne prosessen for brukerne. Ved å samle oppskrifter på ett sted, gi enkel tilgang til ingredienser, og tilby funksjoner som tilpassede måltidsplaner, ønsker vi å gjøre matlagingen både enklere og mer inspirerende. Appen vil gi brukerne muligheten til å organisere sine favorittoppskrifter, oppdage nye retter, og effektivt planlegge sine måltider, og dermed forbedre deres matlagingserfaring.
+- [Kort forklaring](#kort-forklaring)
+- [Struktur](#struktur)
+- [Avhengigheter](#avhengigheter)
 
-Applikasjonen har et innloggingssystem som tilpasser appen etter hvem som er logget inn. Dette legger opp til kvantitativ bruk, samtidig som man bare vil kunne se sine egne oppskrifter.
+## Kort forklaring
 
-Det er enkelt å lage en ny bruker, og komme seg i gang. Vi har lagt opp til at det er studenter som bruker appen vår, og bruker derfor student-ID aktivt.
+Denne modulen foretar seg alt av det grafiske for applikasjonen, pluss noen andre funksjoner som beskrives under. Generelt sett finnes det én controller per fxml-fil i `resources`, hvor kontrolleren henter logikk fra en model-klasse. For enklere oversikt og mer uavhengighet er det laget flere model-klasser, avhengig av hvilken controller-klasse som er aktiv. Denne strukturen gjør det enkelt å vedlikeholde og utvide applikasjonen ved å legge til nye scener, controller-klasser og model-klasser etter senere behov og ønsker.
 
-Appen henter data fra server, som betyr at en server må være satt opp for at appen skal fungere.
+## Struktur
 
----
+Applikasjonen benytter seg av totale 3 ulike 'scenes':
 
-## Oversikt
+- [Innloggingsside/oppstartsside](#innloggingsside)
+- [Side for å lage en ny bruker](#ny-bruker)
+- [Hovedside](#hovedside), der alle oppskrifter til den innloggede brukeren vises/opprettes
 
-- [Kokebok for matoppskrifter (Cookingbook)](#kokebok-for-matoppskrifter-cookingbook)
-  - [Oversikt](#oversikt)
-  - [Krav](#krav)
-  - [Eclipse che](#eclipse-che)
-  - [Appfunksjonalitet](#appfunksjonalitet)
-  - [Kjøring](#kjøring)
-  - [Kodestruktur](#kodestruktur)
-    - [Java-FX](#java-fx)
-    - [Core](#core)
-    - [Persistence](#persistence)
-    - [Restserver](#restserver)
-  - [Testdekning og byggverifisering](#testdekning-og-byggverifisering)
-    - [JUnit-tester](#junit-tester)
-    - [Integrasjonstester](#integrasjonstester)
-    - [JaCoCo](#jacoco)
-    - [SpotBugs og Checkstyle](#spotbugs-og-checkstyle)
-- [Shippability av Appen](#shippability-av-appen)
-  - [jlink](#jlink)
-  - [jpackage](#jpackage)
-- [Mappestruktur](#mappestruktur)
-  - [Workflow](#workflow)
+Alle controller-klassene har som nevnt sin egen model-klasse som håndterer logikk, bortsett fra innloggingssiden som i praksis ikke utfører noe særlig logikk, og utfører derfor den lille logikken selv. 
 
----
+### Innloggingsside
+Innloggingssiden har et innlogginsfelt, der en ID og et passord sjekkes gjennom en remote-klasse (som beksrives lengre ned). Dersom brukervalideringen blir godkjent, blir brukeren sendt til neste 'scene', som er hovedsiden. Ved feil blir brukeren varslet om at innlogginen feilet. Siden dette er all logikk som skjer på denne siden, har vi lagt at controller-klassen kaller rett på remote-klassen i stedet for at dette går gjennom en model-klasse.
 
-## Krav
+### Hovedside
+Hovedsiden består av flere komponenter:
 
-Det stilles krav til å ha følgende:
+- En liste over oppskrifter på toppen
+- Et detaljvisningsområde på venstre side som viser informasjon om en valgt oppskrift
+- Et interaktivt vindu til høyre for å legge inn oppskrifter
 
-- **Java:** Versjon 17
-- **Maven:** Versjon 3.9.9
+Når en bruker velger en oppskrift fra listen over eksisterende oppskrifter, oppdateres det detaljerte visningsfeltet nede til venstre med informasjon om den valgte oppskriften. Når en oppskrift er valgt kan brukeren også velge å slette den valgte oppskriften. Nede til høyre kan brukeren legge til en ny oppskrift ved å legge til en tittel, velge type oppskrift, en 'slik gjør du' veiledning, og oppskrifter. Man vil kunne se hvilke oppskrifter som er lagt inn, slik at man har oversikt over de registrerte oppskriftene til enhver tid. Listen over de innlagte oppskriftene skjer er lokal logikk som skjer i model-klassen, men idet man lagrer hele oppskriften blir det sendt en endringsforespørsel til server.
 
-Det er en mulighet for at prosjektet kjøre med andre versjoner av java og maven, men det er ikke en garanti for dette.
+### Ny bruker
 
-## Eclipse Che
+Denne siden lar en bruker opprette en profil basert på sin student-ID. Kontroller-klassen benytter seg av logikk i sin egen model-klasse. Dersom logikken går gjennom, blir det sendt en forespørsel til server, og en ny bruker blir opprettet. Brukeren blir varslet om det ble opprettet en bruker eller om noe feil skjedde.
 
-Hvis man har lagt inn en tilgangsnøkkel i Eclipse Che, kan man åpne prosjektet her:
 
-[Åpne i Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2024/gr2401/gr2401?new)
+### Remote-klasse
 
----
+Remote-klassen håndterer all kommunikasjon med server. Den benytter seg av HTTP-forespørsler for å sende og motta data. Denne klassen er ansvarlig for å validere brukerinformasjon ved innlogging, samt hente og oppdatere oppskrifter for den innloggede brukeren. Vi har valgt å samle alle forespørsler i én og samme klasse, slik at strukturen er oversiktlig, og det er enkelt å vedlikeholde og gjøre nødvendige endringer underveis i utviklingen.
 
-## Appfunksjonalitet
+### User session-klasse
 
-Kokeboken har følgende funksjonalitet:
+Det finnes en egen klasse som inneholder informasjon om hvilken bruker som er innlogget. Denne klassen registrerer når et innloggingsforsøk blir godkjent, og lagrer hvilken bruker dette er, slik at controller-klassen og den korresponderende model-klassen til hovedsiden vet hvem som er innlogget. Slik overføres denne informasjonen mellom de ulike sidene.
 
-- Stilig og moderne design som er appellerende å bruke
-- Opprette en bruker med student-ID
-- Logge inn med en eksisterende bruker
-- **Legge til oppskrift:**
-  - Man velger om man legger til frokost-, lunsj-, middag-, eller dessertoppskrift
-  - Legge til ingredienser
-    - Oversikt over hva slags ingredienser man er i ferd med å legge til
-  - Legge til en 'slik gjør du'-tekst
-- Vise og lese alle dine egne tidligere innlagte oppskrifter
-- Filtrere visningen av oppskriftene basert på hvilken type oppskrift de er (lunsj, dessert etc)
-- Slette oppskrifter man ikke lengre vil ha
+### Testing av Java-Fx 
 
----
+Struktur: 
+Testing av klassene i "java-fx"-mappen ligger i tre mapper.
+- Testene for controllere til login, mainpage og newuser ligger under test/java/fxui/controllers
+- Testen for model-klassene til mainpage og newuser ligger under test/java/fxui/models
+- Testen for remoteklassen som sender http-requests ligger under test/java/fxui/dataaccess 
+- Testen som sjekker "startup" til appen ligger direkete i mappen test/java/fxui under navnet "CookingBookTest"
 
-## Kjøring
+Mocking: 
+Store deler av testene baserere seg på mocking. Vi bruker @injectmocks for å spesifisere hvilken klassen vi ønsker å teste isolert. Alle andre klasser denne klassen er avhengig av merkes med @mock. Dette gjør det enkelere å skrive fokuserte og raske tester. Med mocks får vi opprettet forutsigbare miljø ved å definere hvordan mock-objektene skal oppføre seg. Ved å mocke blir det letter å identifisere feil eller problemer uten å blande inn eksterne faktorer. Ved å foreksempel mocke "CookingBookRemoteAccesss" unngår vi å gjøre faktiske HTTP-kall, men får simulert oppførselen til denne klassen. 
 
-Det er nødvendig med 2 terminalvinduer for å kjøre appen; ett vindu for å kjøre serveren i bakgrunnen, og ett for å kjøre applikasjonen. Begge terminalene må åpnes i prosjektets rot.
+Coverage: 
+Jacoco rapporterer om en testdekning på rundt 70% for klassene fxui.mainpage.Controller, fxui.mainpage.Model og fxui.loginpage.LoginController som drar ned det totale snittet for javafx-modulen sin testdekning. Selv om det ikke er hensiktsmessig å teste alle metoder i javafx, føler gruppen at de har fokusert på å teste de viktigste funksjonalitetene i applikasjonen. Gruppen har også lagt stor vekt på å sikre høy testdekning i kjernelaget (core), som de anser som essensielt for appens stabilitet og kvalitet.
 
-1. **I vindu 1: bygg prosjektet med Maven**:
+## Avhengigheter
 
-   ```bash
-   cd coockbook/
-   mvn clean install
+Modulen benytter seg av følgende avhengigheter (testavhengigheter ikke inkludert):
 
-   ```
-
-2. **Naviger til `java-fx/`-mappen**:
-
-   ```bash
-   cd java-fx/
-
-   ```
-
-3. **I vindu 2: naviger til `restserver/`-mappen:**
-
-   ```bash
-   cd coockbook/restserver
-
-   ```
-
-4. **Kjør serveren:**
-
-   ```bash
-   mvn spring-boot:run
-   ```
-
-   #### Hvis port 8080 er i bruk:
-   ```bash
-   lsof -i :8080
-   kill -9 <PID>
-   ```
-5. **I vindu 1: Kjør applikasjonen**:
-   ```bash
-   mvn javafx:run
-   ```
-
----
-
-## Kodestruktur
-
-Maven-prosjektet cookingbook er oppdelt i ulike moduler, for å lage ulike layers og skille på hva som gjør hva. Dette gjør at det er enkelt å skalere, vedlikeholde og implementere ny funksjonalitet.
-
-### Moduler
-
-#### Java-FX
-
-Fra denne modulen kjører man selve applikasjonen. Den inneholder alt relatert til det grafiske brukergrensesnittet. GUI-et er basert på java-fx, med fxml-filer for hver 'scene' i applikasjonen. Koden har et Model-Controller-View
-
-> ➡️ [Mer informasjon](coockbook/java-fx/readme.md).
-
-#### Core
-
-Prosjektets kjernelogikk ligger i denne modulen. Alle objektene som er relatert til brukere og oppskrifter finnes her.
-
-> ➡️ [Mer informasjon](coockbook/core/readme.md).
-
-#### Persistence
-
-For å lagre alle brukere og oppskrifter ble det opprinnelig laget serialiserere og deserialiserere for å gjøre dette. Alle disse ligger her. Etter implementasjonen av rest-API, er det per nå kun serveren repository-klassen på serversiden som bruker noen av disse klassene for å skrive til og fra fil. Før brukte javafx-modellene disse klassene, men dette er utfaset.
-
-Formatet på lagring er på et egetdefinert json format.
-
-> ➡️ [Mer informasjon](coockbook/persistence/readme.md).
-
-#### Restserver
-
-Dette er den nyeste modulen, som samler alt rundt rest-APIet og serveren. Herfra kjører man serveren. Rest-APIet tillater forespørsler for å hente innloggingsinformasjon, opprette nye brukere, samt oppdatere brukere ved oppretting/sletting av oppskrifter.
-
-> ➡️ [Mer informasjon](coockbook/restserver/readme.md).
-
----
-
-## Testdekning og byggverifisering
-
-For å sikre kvaliteten på koden, har vi konfigurert prosjektet med verifiseringsverktøy som sjekker kodekvaliteten og testdekningen.
-
-Slik fungerer det:
-
-For å komme til prosjektet, kjører man:
-
-```bash
-cd coockbook/
-```
-
-Herfra kan man kjøre:
-
-```bash
-mvn clean verify
-```
-
-Denne kommandoen vil teste og verifisere koden i prosjektet:
-
-### JUnit-tester
-
-JUnit-tester for alle klasser og moduler er laget på en slik måte at testene vil feile dersom helt essensiell logikk og funksjonalitet ikke er tilstede.
-
-### Integrasjonstester
-
-Denne integrasjonstesten for CookingBook - porsjektet er designet for å sjekke fuksjonalitet mellom GUI-et og REST-API-et. Testen skal sikre at funksjoner fungerer som forventet gjennom store deler av prosjektet. Dette er en fullstack integrasjonstest ettersom den tester hele applikasjonen fra frontend til backend. Se mer:
-
-> ➡️ [Mer informasjon om itegrasjonstester](./cookbook/integrationtest/readme.md)
-
-### JaCoCo
-
-For å verifisere at JUnit-testene har god dekningsgrad i prosjektet, brukes JaCoCo for å måle dette. JaCoCo er satt opp med en terskel på 75%, som vil si at prosjektet bygger ikke med maven dersom JUnit-testene ikke dekker minst 75% av prosjektet. Etter at `mvn verify` er kjørt i terminalen, vil dekningsresultatet vises i `coverage`-modulen, som eksisterer utelukkende for å samle testresultater. I denne mappen, under `target/site`, der kan `index.html` åpnes og viser testdekningen.
-
-### SpotBugs og Checkstyle
-
-Implenentasjon av SpotBugs fører til at vi kan identifisere og rette opp potensielle feil i koden, og har en medium. Checkstyle brukes for å sikre at koden følger definerte kodestandarder og retningslinjer. Begge verktøyene er integrert i byggeprosessen og vil kjøre automatisk når `mvn verify`-kommandoen utføres. Prosjektet bygges ikke dersom disse ikke er tilfredsstilt.
-
----
-
-# Shippability av Appen
-
-For å pakke og distribuere appen effektivt, støtter prosjektet **jlink** og **jpackage** for å lage bygg som er enkle å distribuere på tvers av miljøer. Følg disse stegene for å generere en kjørbar versjon av applikasjonen.
-
----
-
-## jlink
-
-1. **Naviger til hovedfolderen og kjør mvn clean**:
-
-   ```bash
-   cd coockbook/
-   mvn clean
-
-   ```
-
-2. **Bruker jlink til å få zip file og build artifacts**:
-
-   ```bash
-   mvn -pl java-fx javafx:jlink
-
-   ```
-
-3. **For å finne zip filen og build artifacts naviger til:**
-
-   ```bash
-   cd java-fx
-   cd target
-
-   ```
-
-4. **Naviger til den executable filen og execute**:
-
-   ```bash
-   cd java-fx/
-   cd target/
-   cd coockbook/
-   cd bin/
-   ./coockbook
-   ```
-
-## jpackage
-
-1. **For å pakke prosjektet og bruke appen, bruk**:
-   ```bash
-   mvn -pl java-fx jpackage:jpackage
-   ```
-
-> **NB! Må kjøre stegene med jlink først**
-
-# Mappestruktur
-
-Prosjektet er organisert i en modulær struktur for enkel skalering, vedlikehold og utvidelse. Her er en oversikt over de viktigste mappene og filene:
-
-### Oversikt over moduler
-
-- **`core/`**: Inneholder kjernelogikken, med objekter og klasser for brukere og oppskrifter.
-- **`java-fx/`**: Hovedmodulen for JavaFX-applikasjonen. Inneholder GUI-relaterte filer og logikk.
-- **`persistence/`**: Tidligere ansvarlig for lokal datalagring. Nå brukt av serveren for å lese/lagre JSON-filer.
-- **`restserver/`**: REST API-serveren for appen, håndterer forespørsler og dataoperasjoner.
-
-### Fullstendig struktur
-
-```
-├── coockbook
-│   ├── config
-│   │   ├── checkstyle
-│   │   │   └── checkstyle.xml
-│   │   └── spotbugs
-│   │       └── spotbugs_filter.xml
-│   ├── core
-│   │   ├── pom.xml
-│   │   ├── readme.md
-│   │   └── src
-│   │       ├── main
-│   │       │   └── java
-│   │       │       ├── core
-│   │       │       │   ├── Book.java
-│   │       │       │   ├── Breakfast.java
-│   │       │       │   ├── Dessert.java
-│   │       │       │   ├── Dinner.java
-│   │       │       │   ├── Ingredient.java
-│   │       │       │   ├── Lunch.java
-│   │       │       │   ├── Recipe.java
-│   │       │       │   ├── Student.java
-│   │       │       │   └── Users.java
-│   │       │       └── module-info.java
-│   │       └── test
-│   │           └── java
-│   │               └── core
-│   │                   ├── BookTest.java
-│   │                   ├── IngredientTest.java
-│   │                   ├── RecipeTest.java
-│   │                   ├── StudentTest.java
-│   │                   └── UsersTest.java
-│   ├── coverage
-│   │   ├── pom.xml
-│   ├── java-fx
-│   │   ├── pom.xml
-│   │   ├── readme.md
-│   │   └── src
-│   │       ├── main
-│   │       │   ├── java
-│   │       │   │   ├── fxui
-│   │       │   │   │   ├── Coockingbook.java
-│   │       │   │   │   ├── UserSession.java
-│   │       │   │   │   ├── loginpage
-│   │       │   │   │   │   └── LoginController.java
-│   │       │   │   │   ├── mainpage
-│   │       │   │   │   │   ├── Controller.java
-│   │       │   │   │   │   └── Model.java
-│   │       │   │   │   ├── newuserpage
-│   │       │   │   │   │   ├── NewUserController.java
-│   │       │   │   │   │   └── NewUserModel.java
-│   │       │   │   │   └── remote
-│   │       │   │   │       └── CookingBookRemoteAccess.java
-│   │       │   │   └── module-info.java
-│   │       │   └── resources
-│   │       │       └── fxui
-│   │       │           ├── loginpage
-│   │       │           │   ├── Login.fxml
-│   │       │           │   └── login.css
-│   │       │           ├── mainpage
-│   │       │           │   ├── HomeScreen.fxml
-│   │       │           │   └── homescreen.css
-│   │       │           └── newuserpage
-│   │       │               ├── NewUser.fxml
-│   │       │               └── newuser.css
-│   │       └── test
-│   │           └── java
-│   │               └── fxui
-│   │                   └── CookingBookTest.java
-│   ├── persistence
-│   │   ├── pom.xml
-│   │   ├── readme.md
-│   │   └── src
-│   │       ├── main
-│   │       │   └── java
-│   │       │       ├── module-info.java
-│   │       │       └── persistence
-│   │       │           ├── BookDeserializer.java
-│   │       │           ├── BookSerializer.java
-│   │       │           ├── BookStudentModule.java
-│   │       │           ├── IngredientDeserializer.java
-│   │       │           ├── IngredientSerializer.java
-│   │       │           ├── RecipeDeserializer.java
-│   │       │           ├── RecipeSerializer.java
-│   │       │           ├── StudentDeserializer.java
-│   │       │           ├── StudentSerializer.java
-│   │       │           ├── UserDeserializer.java
-│   │       │           ├── UserSerializer.java
-│   │       │           └── UsersHandler.java
-│   │       └── test
-│   │           └── java
-│   │               └── persistence
-│   │                   ├── BookStudentModuleTest.java
-│   │                   └── UsersHandlerTest.java
-│   ├── pom.xml
-│   └── restserver
-│       ├── SavedUsers.json
-│       ├── pom.xml
-│       ├── readme.md
-│       └── src
-│           ├── main
-│           │   ├── java
-│           │   │   ├── module-info.java
-│           │   │   └── restserver
-│           │   │       ├── AppConfig.java
-│           │   │       ├── CookingBookController.java
-│           │   │       ├── CookingBookService.java
-│           │   │       ├── RestServerApplication.java
-│           │   │       └── repository
-│           │   │           └── CookingBookRepository.java
-│           │   └── resources
-│           │       └── application.properties
-│           └── test
-│               └── java
-│                   └── restserver
-│                       ├── CookingBookControllerTest.java
-│                       ├── CookingBookServiceTest.java
-│                       └── repository
-│                           └── CookingBookRepositoryTest.java
-├── devfile.yaml
-├── docs
-│   ├── diagrams
-│   │   ├── classdiagram.puml
-│   │   ├── packagediagram.puml
-│   │   ├── sequencediagram.puml
-│   │   └── sequencediagramfirst.puml
-│   ├── release1
-│   │   ├── ai-tools.md
-│   │   └── release1.md
-│   ├── release2
-│   │   └── release2.md
-│   ├── release3
-│   │   ├── release3.md
-│   │   └── sustainability.md
-│   └── stories
-│       └── stories-release2.md
-├── pictures
-│   ├── Kokebok.png
-│   ├── Kokebok2.png
-│   ├── Sekvensdiagram.png
-│   └── directory_structure.png
-├── readme.md
-└── struktur.txt
-```
-
-## Workflow
-Vi strukturerte arbeidsflyten vår gjennom ukentlige møter, der vi jobbet tett sammen for å sikre kontinuerlig fremdrift. Et av hovedprinsippene våre var å dele opp prosjektet i mindre, håndterbare oppgaver (issues) som hver enkelt deltaker kunne ta ansvar for. Dette ga oss mulighet til å jobbe parallelt, samtidig som vi oppmuntret til samarbeid og innspill fra teamet underveis.
-
-Vårt hovedfokus var å utvikle de ulike releasene på en effektiv og gjennomtenkt måte, der alle steg i prosessen ble nøye vurdert. For å sikre god flyt i arbeidet, opprettet vi merge requests basert på de definerte issuesene. Dette gjorde det mulig for teamet å aktivt gå inn i branches, kommentere på endringer, gi tilbakemeldinger, og bidra der det var nødvendig. På denne måten fikk vi også bedre oversikt over de ulike endringene og forbedringene i prosjektet.
-
-Når vi møtte på utfordringer – og det var flere av dem – tilpasset vi oss ved å sette opp ekstra møter i tillegg til de ukentlige faste møtene. Disse møtene ble brukt til å løse problemer raskt, avklare misforståelser, og diskutere løsninger i fellesskap. Dette gjorde at vi kunne opprettholde fremdriften og kvaliteten i arbeidet vårt.
+- JavaFX for GUI-komponenter (openjfx).
+- Jackson databind (JSON-bibliotek for parsing av data)
+- Klassene i core-modulen
