@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookingBookRemoteAccess.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-fx</a> &gt; <a href="index.source.html" class="el_package">fxui.remote</a> &gt; <span class="el_source">CookingBookRemoteAccess.java</span></div><h1>CookingBookRemoteAccess.java</h1><pre class="source lang-java linenums">package fxui.remote;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import core.Student;
+import core.Users;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * This class provides remote access to the CookingBook service.
+ */
+public class CookingBookRemoteAccess {
+
+    private static final String BASE_URL = &quot;http://localhost:8080/cookingbook/users&quot;;
+    private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
+
+    /**
+     * Constructs a new CookingBookRemoteAccess instance.
+     * Initializes the HttpClient and ObjectMapper with the necessary modules.
+     */
+<span class="fc" id="L27">    public CookingBookRemoteAccess() {</span>
+<span class="fc" id="L28">        this.httpClient = HttpClient.newHttpClient();</span>
+<span class="fc" id="L29">        this.objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L30">    }</span>
+
+<span class="fc" id="L32">    public CookingBookRemoteAccess(HttpClient httpClient, ObjectMapper objectMapper) {</span>
+<span class="fc" id="L33">        this.httpClient = httpClient;</span>
+<span class="fc" id="L34">        this.objectMapper = objectMapper;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Get all users from the CookingBook service.
+     * @return List of Students
+     * @throws Exception if there is an error during the HTTP request or response processing
+     */
+    public ArrayList&lt;Student&gt; getAllUsers() throws Exception {
+<span class="fc" id="L43">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L44">                .uri(URI.create(BASE_URL))</span>
+<span class="fc" id="L45">                .GET()</span>
+<span class="fc" id="L46">                .build();</span>
+    
+<span class="fc" id="L48">        HttpResponse&lt;String&gt; response = httpClient.send(</span>
+<span class="fc" id="L49">                request, HttpResponse.BodyHandlers.ofString());</span>
+    
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (response.statusCode() == 200) {</span>
+            // Directly deserialize the JSON into a list of Student objects
+<span class="fc" id="L53">            return objectMapper.readValue(response.body(), Users.class).getUsers();</span>
+        } else {
+<span class="fc" id="L55">            throw new IOException(&quot;Failed to get students, status code: &quot; + response.statusCode());</span>
+        }
+    }
+
+    /**
+     * Get a specific student by ID from the CookingBook service.
+     * @param id Student ID
+     * @return Student
+     * @throws Exception if there is an error during the HTTP request or response processing
+     */
+    public Student getStudentById(int id) throws Exception {
+<span class="fc" id="L66">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L67">                .uri(URI.create(BASE_URL + &quot;/&quot; + id))</span>
+<span class="fc" id="L68">                .GET()</span>
+<span class="fc" id="L69">                .build();</span>
+
+<span class="fc" id="L71">        HttpResponse&lt;String&gt; response = httpClient.send(</span>
+<span class="fc" id="L72">                request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L73">        ObjectMapper map = new ObjectMapper();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (response.statusCode() == 200) {</span>
+<span class="fc" id="L75">            return map.readValue(response.body(), Student.class);</span>
+        } else {
+<span class="fc" id="L77">            throw new IOException(&quot;Failed to get student, status code: &quot; + response.statusCode());</span>
+        }
+    }
+
+    /**
+     * Update an existing student in the CookingBook service.
+     * @param id The student ID to update
+     * @param student The updated student data
+     * @throws Exception if there is an error during the HTTP request or response processing
+     */
+    public void updateStudent(int id, Student student) throws Exception {
+<span class="fc" id="L88">        String studentJson = objectMapper.writeValueAsString(student);</span>
+
+<span class="fc" id="L90">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L91">                .uri(URI.create(BASE_URL + &quot;/&quot; + id))</span>
+<span class="fc" id="L92">                .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L93">                .PUT(HttpRequest.BodyPublishers.ofString(studentJson))</span>
+<span class="fc" id="L94">                .build();</span>
+
+<span class="fc" id="L96">        HttpResponse&lt;String&gt; response = httpClient.send(</span>
+<span class="fc" id="L97">                request, HttpResponse.BodyHandlers.ofString());</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (response.statusCode() != 200) {</span>
+<span class="fc" id="L100">            throw new IOException(&quot;Failed to update student, status code: &quot; </span>
+<span class="fc" id="L101">                    + response.statusCode());</span>
+        }
+<span class="fc" id="L103">    }</span>
+
+    private HashMap&lt;Integer, String&gt; loadAccountsFromServer() 
+            throws IOException, InterruptedException {
+<span class="fc" id="L107">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L108">                .uri(URI.create(&quot;http://localhost:8080/cookingbook/users/accounts&quot;))</span>
+<span class="fc" id="L109">                .GET()</span>
+<span class="fc" id="L110">                .build();</span>
+
+<span class="fc" id="L112">        HttpResponse&lt;String&gt; response = httpClient.send(</span>
+<span class="fc" id="L113">            request, HttpResponse.BodyHandlers.ofString());</span>
+
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (response.statusCode() == 200) {</span>
+
+            // Deserialize the response into a HashMap&lt;Integer, String&gt;
+<span class="fc" id="L118">            ObjectMapper objectMap = new ObjectMapper();</span>
+<span class="fc" id="L119">            return objectMap.readValue(</span>
+<span class="fc" id="L120">                response.body(), </span>
+<span class="fc" id="L121">                new com.fasterxml.jackson.core.type.TypeReference&lt;HashMap&lt;Integer, String&gt;&gt;() {}</span>
+            );
+        } else {
+<span class="nc" id="L124">            throw new IOException(&quot;Failed to fetch accounts from server, status code: &quot; </span>
+<span class="nc" id="L125">                    + response.statusCode());</span>
+        }
+    }
+
+    public boolean validateStudent(int id, String password) 
+            throws IOException, InterruptedException {
+<span class="fc" id="L131">        HashMap&lt;Integer, String&gt; users = loadAccountsFromServer();</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">        return users.containsKey(id) &amp;&amp; users.get(id).equals(password);</span>
+    }
+
+    /**
+     * Adds a new student to the CookingBook service.
+     * @param student The student to add
+     * @throws IOException if there is an error during the HTTP request or response processing
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public void addStudent(Student student) throws IOException, InterruptedException {
+<span class="fc" id="L142">        ObjectMapper objectMap = new ObjectMapper();</span>
+<span class="fc" id="L143">        String studentJson = objectMap.writeValueAsString(student);</span>
+
+<span class="fc" id="L145">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L146">            .uri(URI.create(&quot;http://localhost:8080/cookingbook/users&quot;))</span>
+<span class="fc" id="L147">            .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L148">            .POST(HttpRequest.BodyPublishers.ofString(studentJson))</span>
+<span class="fc" id="L149">            .build();</span>
+
+<span class="fc" id="L151">        HttpResponse&lt;String&gt; response = httpClient.send(</span>
+<span class="fc" id="L152">            request, HttpResponse.BodyHandlers.ofString());</span>
+
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (response.statusCode() != 200) {</span>
+<span class="fc" id="L155">            throw new IOException(&quot;Failed to add student. Status code: &quot; + response.statusCode());</span>
+        } else {
+<span class="nc" id="L157">            System.out.println(&quot;Student added successfully!&quot;);</span>
+        }
+<span class="nc" id="L159">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="10.3.4">
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/Cookingbook.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/UserSession.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/loginpage/LoginController.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/mainpage/Controller.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/mainpage/Model.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/newuserpage/NewUserController.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/newuserpage/NewUserModel.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/remote/CookingBookRemoteAccess.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/CookingbookTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/dataaccess/CookingBookRemoteTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/models/NewUserModelTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/models/MainpageModelTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/NewUserControllerTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/LoginControllerTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/MainPageControllerTest.java">
+</file>
 </checkstyle>

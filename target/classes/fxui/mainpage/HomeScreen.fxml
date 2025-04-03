@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="570.0" stylesheets="@homescreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+
+       <!-- Feilmeldingsvindu som dekker hele appen -->
+      <AnchorPane fx:id="errorPane" prefHeight="611.0" prefWidth="570.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fx:id="errorText" layoutX="150.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="En feil oppstod" wrappingWidth="300.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnOkError" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" onAction="#hideError" text="OK" />
+         </children>
+      </AnchorPane>
+      <TabPane prefHeight="611.0" prefWidth="570.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Recipes">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                      <AnchorPane fx:id="AnchorSecondary" minHeight="0.0" minWidth="0.0" prefHeight="550.5" prefWidth="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ListView fx:id="listViewMatretter" layoutX="79.0" layoutY="61.0" prefHeight="171.0" prefWidth="412.0" AnchorPane.bottomAnchor="334.0" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="61.0">
+                                 <contextMenu>
+                                    <ContextMenu fx:id="viewSplit">
+                                      <items>
+                                          <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </ListView>
+                              <Text fill="#cdcdcd" fontSmoothingType="LCD" layoutX="149.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipes " textAlignment="CENTER" wrappingWidth="104.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="typeRecipeView" layoutX="279.0" layoutY="9.0" prefHeight="26.0" prefWidth="123.0" styleClass="shaded-text" />
+                              <Text id="txtMatrett" fx:id="txtOutputMatrett" fill="#cdcdcd" layoutX="66.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="choiceBoxPorsjon" layoutX="463.0" layoutY="273.0" prefWidth="50.0" styleClass="shaded-text" />
+                              <Text id="txtBeskrivelse" fill="#cdcdcd" layoutX="382.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Portions :" wrappingWidth="62.21337890625">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                              <TextArea fx:id="txtOutputBeskrivelse" layoutX="66.0" layoutY="317.0" prefHeight="194.0" prefWidth="228.0" wrapText="true" />
+                              <Button fx:id="btnSlett" layoutX="422.0" layoutY="472.0" mnemonicParsing="false" onAction="#delete" text="DELETE" />
+                              <ListView fx:id="listViewMatrett" layoutX="331.0" layoutY="317.0" prefHeight="132.0" prefWidth="182.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="331.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="317.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+          <Tab text="Add recipe">
+               <content>
+                <AnchorPane fx:id="AnchorCreate" minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="570.0">
+                     <children>
+                        <Text fill="#cdcdcd" layoutX="197.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new recipe">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="inputMatrett" layoutX="116.0" layoutY="98.0" prefHeight="24.0" prefWidth="133.0" promptText="Dish name" styleClass="shaded-text" />
+                        <TextArea fx:id="inputBeskrivelse" layoutX="121.0" layoutY="149.0" prefHeight="87.0" prefWidth="333.0" promptText="Discribe the dish" styleClass="shaded-text" wrapText="true" />
+                        <AnchorPane layoutX="10.0" layoutY="149.0" />
+                        <Button fx:id="btnComplete" layoutX="133.0" layoutY="427.0" mnemonicParsing="false" onAction="#complete" prefHeight="39.0" prefWidth="185.0" text="Complete" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="127.0" />
+                        <TextField fx:id="txtIngrediesToAdd" layoutX="116.0" layoutY="253.0" prefHeight="31.0" prefWidth="84.0" promptText="ingredient" styleClass="shaded-text" />
+                        <TextField fx:id="txtMengdeToAdd" layoutX="217.0" layoutY="253.0" prefHeight="31.0" prefWidth="60.0" promptText="amount" styleClass="shaded-text" />
+                        <ChoiceBox fx:id="choiceBoxMasure" layoutX="294.0" layoutY="253.0" prefHeight="31.0" prefWidth="50.0" styleClass="shaded-text" />
+                        <Button fx:id="btnLeggTil" layoutX="363.0" layoutY="249.0" mnemonicParsing="false" onAction="#leggTilKlikk" prefHeight="39.0" prefWidth="92.0" text="Add +" />
+                        <ListView fx:id="lstIngredienser" layoutX="158.0" layoutY="304.0" prefHeight="100.0" prefWidth="254.0" />
+                        <ChoiceBox fx:id="typeRecipe" layoutX="331.0" layoutY="97.0" prefHeight="26.0" prefWidth="123.0" styleClass="shaded-text" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <MenuButton fx:id="optionMenu" layoutX="455.0" layoutY="13.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="101.0" text="Options">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#logOut" text="Log out" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

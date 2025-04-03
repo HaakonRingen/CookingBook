@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NewUserModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-fx</a> &gt; <a href="index.source.html" class="el_package">fxui.newuserpage</a> &gt; <span class="el_source">NewUserModel.java</span></div><h1>NewUserModel.java</h1><pre class="source lang-java linenums">package fxui.newuserpage;
+
+
+import core.Student;
+import fxui.remote.CookingBookRemoteAccess;
+
+/**
+ * The NewUserModel class is responsible for creating new user accounts.
+ * It interacts with the CookingBookRemoteAccess to add new students.
+ */
+public final class NewUserModel {
+
+
+<span class="fc" id="L14">    private Boolean success = false;</span>
+    private CookingBookRemoteAccess access;
+
+<span class="fc" id="L17">    public NewUserModel() throws Exception {</span>
+<span class="fc" id="L18">        this.access = new CookingBookRemoteAccess();</span>
+<span class="fc" id="L19">    }</span>
+
+    /**
+     * Creates a new user with the given details.
+     *
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param id the ID of the user
+     * @param password the password of the user
+     * @param confirmPassword the confirmation of the password
+     */
+    public void createUser(String firstName, String lastName, String id,
+        String password, String confirmPassword) {
+<span class="fc" id="L32">        checkParams(firstName, lastName, id, password, confirmPassword);</span>
+        try {
+<span class="fc" id="L34">            int parsedId = Integer.parseInt(id); // Ensuring ID is a number</span>
+<span class="fc" id="L35">            Student newStudent = new Student(firstName, lastName, parsedId, password);</span>
+<span class="fc" id="L36">            access.addStudent(newStudent);</span>
+<span class="fc" id="L37">            success = true;</span>
+<span class="nc" id="L38">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;Student ID must be a valid 6-digit number&quot;);</span>
+<span class="nc" id="L40">        } catch (Exception e) {</span>
+<span class="nc" id="L41">            e.printStackTrace();</span>
+<span class="nc" id="L42">            success = false;</span>
+<span class="fc" id="L43">        }</span>
+        
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Checks the parameters for user creation and validates their correctness.
+     *
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param id the ID of the user
+     * @param password the password of the user
+     * @param confirmPassword the confirmation of the password
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    private void checkParams(String firstName, String lastName, String id, 
+                             String password, String confirmPassword) {
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        if (firstName == null || firstName.trim().isEmpty()) {</span>
+<span class="fc" id="L60">            throw new IllegalArgumentException(&quot;First name cannot be null or empty&quot;);</span>
+        }
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">        if (lastName == null || lastName.trim().isEmpty()) {</span>
+<span class="nc" id="L63">            throw new IllegalArgumentException(&quot;Last name cannot be null or empty&quot;);</span>
+        }
+<span class="pc bpc" id="L65" title="3 of 8 branches missed.">        if (id == null || id.trim().isEmpty() || id.length() != 6 || !id.matches(&quot;\\d{6}&quot;)) {</span>
+<span class="fc" id="L66">            throw new IllegalArgumentException(&quot;Student ID must be a 6-digit number&quot;);</span>
+        }
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">        if (password == null || password.trim().isEmpty()) {</span>
+<span class="nc" id="L69">            throw new IllegalArgumentException(&quot;Password cannot be null or empty&quot;);</span>
+        }
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (password.length() &lt; 4) {</span>
+<span class="fc" id="L72">            throw new IllegalArgumentException(&quot;Password must be at least 6 characters long&quot;);</span>
+        }
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (!password.equals(confirmPassword)) {</span>
+<span class="fc" id="L75">            throw new IllegalArgumentException(&quot;Passwords do not match&quot;);</span>
+        }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (firstName.length() &lt; 2) {</span>
+<span class="fc" id="L78">            throw new IllegalArgumentException(&quot;First name must be at least 2 characters long&quot;);</span>
+        }
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (lastName.length() &lt; 2) {</span>
+<span class="fc" id="L81">            throw new IllegalArgumentException(&quot;Last name must be at least 2 characters long&quot;);</span>
+        }
+<span class="fc" id="L83">    }</span>
+
+
+    /**
+     * Returns the success status of the user creation process.
+     * 
+     * @return true if the user was successfully created, false otherwise
+     */
+    public Boolean getSuccess() {
+<span class="fc" id="L92">        Boolean value = success;</span>
+<span class="fc" id="L93">        success = false;</span>
+<span class="fc" id="L94">        return value;</span>
+    }
+
+    public void setAccess(CookingBookRemoteAccess access) {
+<span class="fc" id="L98">        this.access = access;</span>
+<span class="fc" id="L99">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

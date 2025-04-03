@@ -1,0 +1,7 @@
+fxui/controllers/NewUserControllerTest.class
+fxui/CookingbookTest.class
+fxui/controllers/LoginControllerTest.class
+fxui/controllers/MainPageControllerTest.class
+fxui/models/MainpageModelTest.class
+fxui/dataaccess/CookingBookRemoteTest.class
+fxui/models/NewUserModelTest.class

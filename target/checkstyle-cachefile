@@ -1,4 +1,19 @@
-#Sun Nov 17 12:15:49 CET 2024
-configuration*?=93F6E484220529AF618046D7F451DC3A0768D325
+#Sun Nov 17 12:16:21 CET 2024
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/Cookingbook.java=1731597644003
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/UserSession.java=1731597644004
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/loginpage/LoginController.java=1731597644004
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/mainpage/Controller.java=1731607739178
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/mainpage/Model.java=1731620555997
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/newuserpage/NewUserController.java=1731597644005
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/newuserpage/NewUserModel.java=1731597644005
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/main/java/fxui/remote/CookingBookRemoteAccess.java=1731597644006
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/CookingbookTest.java=1731597644008
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/LoginControllerTest.java=1731614724456
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/MainPageControllerTest.java=1731620555998
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/controllers/NewUserControllerTest.java=1731597644009
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/dataaccess/CookingBookRemoteTest.java=1731597644010
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/models/MainpageModelTest.java=1731620555998
+/Users/haakonringen/Documents/Dokumenter\ \u2013\ H\u00E5kons\ MacBook\ Pro/Datatek/2.\ klasse/ITP/Gruppeprosjekt/gr2401/cookbook/java-fx/src/test/java/fxui/models/NewUserModelTest.java=1731597644010
+configuration*?=8A4463740836FCFC0BDE5F32C6D2D59F0200EC97
 module-resource*?\:checkstyle-suppressions.xml=D21BF65091BD991CC7C4A4A51CF2678EA5E20499
 module-resource*?\:checkstyle-xpath-suppressions.xml=CCC57C455C588620C42BD6D6148B7298F20DC0C7

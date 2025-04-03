@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+java-fx,fxui.remote,CookingBookRemoteAccess.new TypeReference() {...},0,6,0,0,0,1,0,1,0,1
+java-fx,fxui.remote,CookingBookRemoteAccess,13,214,3,11,4,62,3,12,0,8
+java-fx,fxui,Cookingbook,3,31,0,0,2,8,1,2,1,2
+java-fx,fxui,UserSession,3,20,1,1,1,9,2,4,1,4
+java-fx,fxui.newuserpage,NewUserModel,23,132,8,20,7,31,8,11,0,5
+java-fx,fxui.newuserpage,NewUserController,9,236,6,16,2,54,9,11,3,6
+java-fx,fxui.loginpage,LoginController,97,207,2,12,26,53,7,13,5,8
+java-fx,fxui.mainpage,Controller,300,681,18,20,40,151,21,24,5,21
+java-fx,fxui.mainpage,Model,66,291,15,35,15,65,17,26,2,16

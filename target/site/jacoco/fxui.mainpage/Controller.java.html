@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-fx</a> &gt; <a href="index.source.html" class="el_package">fxui.mainpage</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package fxui.mainpage;
+
+import core.Ingredient;
+import core.Recipe;
+import fxui.UserSession;
+import fxui.loginpage.LoginController;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javafx.animation.ScaleTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+
+
+/**
+ * Controller for the Cookbook application, managing user interactions and model updates.
+ */
+public class Controller {
+    
+    private Model model;
+
+<span class="pc" id="L39">    ObservableList&lt;Integer&gt; porsjoner = FXCollections.observableArrayList(</span>
+<span class="pc" id="L40">        1, 2, 3, 4, 5, 6, 7, 8, 9, 10</span>
+    );
+<span class="pc" id="L42">    ObservableList&lt;String&gt; measure = FXCollections.observableArrayList(</span>
+        &quot;L&quot;, &quot;dl&quot;, &quot;cl&quot;, &quot;ml&quot;, &quot;kg&quot;, &quot;g&quot;, &quot;ts&quot;, &quot;ss&quot;, &quot;stk&quot;
+    );
+<span class="pc" id="L45">    ObservableList&lt;String&gt; lstTypeRecipe = FXCollections.observableArrayList(</span>
+        &quot;Breakfast&quot;, &quot;Lunch&quot;, &quot;Dinner&quot;, &quot;Dessert&quot;
+    );
+<span class="pc" id="L48">    ObservableList&lt;String&gt; lstTypeRecipeView = FXCollections.observableArrayList(</span>
+        &quot;Breakfast&quot;, &quot;Lunch&quot;, &quot;Dinner&quot;, &quot;Dessert&quot;, &quot;All&quot;
+    );
+
+    @FXML
+    private MenuButton optionMenu;
+
+    @FXML
+    private AnchorPane errorPane;
+
+    @FXML
+    private Button btnOkError;
+
+    @FXML
+    private Button btnComplete;
+
+    @FXML
+    private Button btnLeggTil;
+
+    @FXML
+    private Button btnSlett;
+
+    @FXML
+    private ListView&lt;String&gt; lstIngredienser;
+
+    @FXML
+    private ChoiceBox&lt;String&gt; choiceBoxMasure;
+
+    @FXML
+    private ChoiceBox&lt;Integer&gt; choiceBoxPorsjon;
+
+    @FXML
+    private TextArea inputBeskrivelse;
+
+    @FXML
+    private TextField inputMatrett;
+
+    @FXML
+    private ListView&lt;String&gt; listViewMatrett;
+
+    @FXML
+    private ListView&lt;String&gt; listViewMatretter;
+
+    @FXML
+    private TextField txtIngrediesToAdd;
+
+    @FXML
+    private TextField txtMengdeToAdd;
+
+    @FXML
+    private TextArea txtOutputBeskrivelse;
+
+    @FXML
+    private Text txtOutputMatrett;
+
+    @FXML
+    private Text errorText;
+
+    @FXML
+    private ChoiceBox&lt;String&gt; typeRecipe;
+
+
+    @FXML
+    private ChoiceBox&lt;String&gt; typeRecipeView;
+
+    /**
+     * Constructs a new Controller and initializes the model and remote access.
+     */
+<span class="nc" id="L116">    public Controller() {</span>
+        try {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (this.model == null) {</span>
+<span class="nc" id="L119">                model = new Model(); // Initialize the model</span>
+            }
+<span class="nc" id="L121">        } catch (Exception e) {</span>
+<span class="nc" id="L122">            showError(&quot;Failed to initialize: &quot; + e.getMessage());</span>
+<span class="nc" id="L123">            e.printStackTrace();</span>
+<span class="nc" id="L124">        }</span>
+    
+<span class="nc" id="L126">    }</span>
+    
+    /**
+     * Constructs a new Controller with the specified model.
+     *
+     * @param model the model to use for the controller
+     */
+<span class="fc" id="L133">    public Controller(Model model) {</span>
+<span class="fc" id="L134">        this.model = model;</span>
+<span class="fc" id="L135">    }</span>
+
+    public void setModel(Model model) {
+<span class="fc" id="L138">        this.model = model;</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Initializes the controller and sets up the UI elements.
+     */
+    @FXML
+    public void initialize() {
+        try {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            if (model == null) {</span>
+<span class="nc" id="L148">                model = new Model();</span>
+            }
+
+
+<span class="fc" id="L152">            initializeUiElements();</span>
+<span class="fc" id="L153">            updateDinners(); // Update recipe list</span>
+<span class="fc" id="L154">            updateIngredients(); // Reset temporary ingredients</span>
+
+<span class="fc" id="L156">            listViewMatretter.setOnMouseClicked(event -&gt; {</span>
+<span class="fc" id="L157">                String selectedItem = listViewMatretter.getSelectionModel().getSelectedItem();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                if (selectedItem != null) {</span>
+<span class="fc" id="L159">                    var recipe = model.getRecipe(selectedItem);</span>
+<span class="fc" id="L160">                    String name = recipe.getNavn();</span>
+<span class="fc" id="L161">                    String tutorial = recipe.getTutorial();</span>
+                
+<span class="fc" id="L163">                    var ingredients = recipe.getIngredients();</span>
+<span class="fc" id="L164">                    List&lt;String&gt; numberedIngredients = new ArrayList&lt;&gt;();</span>
+                
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                    for (int i = 0; i &lt; ingredients.size(); i++) {</span>
+<span class="fc" id="L167">                        numberedIngredients.add((i + 1) + &quot;. &quot; + ingredients.get(i));</span>
+                    }
+    
+<span class="fc" id="L170">                    var ingredientsObservable = FXCollections.observableArrayList(</span>
+                        numberedIngredients);
+    
+<span class="fc" id="L173">                    txtOutputMatrett.setText(name);</span>
+<span class="fc" id="L174">                    txtOutputBeskrivelse.setText(tutorial);</span>
+<span class="fc" id="L175">                    listViewMatrett.setItems(ingredientsObservable);</span>
+<span class="fc" id="L176">                    listViewMatrett.setItems(</span>
+<span class="fc" id="L177">                        FXCollections.observableArrayList(numberedIngredients));</span>
+                }
+<span class="fc" id="L179">            });</span>
+
+<span class="fc" id="L181">            choiceBoxPorsjon.setOnAction(event -&gt; {</span>
+<span class="nc" id="L182">                int porsjoner = choiceBoxPorsjon.getSelectionModel().getSelectedItem();</span>
+    
+<span class="nc" id="L184">                var recipe = model.getRecipe(txtOutputMatrett.getText());</span>
+<span class="nc" id="L185">                List&lt;Ingredient&gt; ingredients = recipe.getIngredients();</span>
+    
+<span class="nc" id="L187">                List&lt;String&gt; updatedIngredients = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                for (int i = 0; i &lt; ingredients.size(); i++) {</span>
+<span class="nc" id="L189">                    Ingredient ingredient = ingredients.get(i);</span>
+    
+<span class="nc" id="L191">                    double adjustedAmount = ingredient.getAmount() * porsjoner;</span>
+                
+<span class="nc" id="L193">                    updatedIngredients.add((i + 1) + &quot;. &quot; + ingredient.getIngredientName() + &quot; &quot; </span>
+<span class="nc" id="L194">                        + adjustedAmount + &quot; &quot; + ingredient.getUnit());</span>
+                }
+    
+<span class="nc" id="L197">                listViewMatrett.getItems().clear();</span>
+<span class="nc" id="L198">                listViewMatrett.getItems().addAll(updatedIngredients);</span>
+<span class="nc" id="L199">            });</span>
+<span class="fc" id="L200">            typeRecipeView.setOnAction(event -&gt; {</span>
+<span class="fc" id="L201">                updateFilteredDinners(); // Update the filtered list when the type changes</span>
+<span class="fc" id="L202">            });</span>
+
+<span class="fc" id="L204">            choiceBoxPorsjon.setOnAction(event -&gt; {</span>
+<span class="fc" id="L205">                int porsjoner = choiceBoxPorsjon.getSelectionModel().getSelectedItem();</span>
+    
+<span class="fc" id="L207">                var recipe = model.getRecipe(txtOutputMatrett.getText());</span>
+<span class="fc" id="L208">                List&lt;Ingredient&gt; ingredients = recipe.getIngredients();</span>
+    
+<span class="fc" id="L210">                List&lt;String&gt; updatedIngredients = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">                for (int i = 0; i &lt; ingredients.size(); i++) {</span>
+<span class="fc" id="L212">                    Ingredient ingredient = ingredients.get(i);</span>
+    
+<span class="fc" id="L214">                    double adjustedAmount = ingredient.getAmount() * porsjoner;</span>
+                
+<span class="fc" id="L216">                    updatedIngredients.add((i + 1) + &quot;. &quot; + ingredient.getIngredientName() + &quot; &quot; </span>
+<span class="fc" id="L217">                        + adjustedAmount + &quot; &quot; + ingredient.getUnit());</span>
+                }
+<span class="fc" id="L219">                listViewMatrett.getItems().clear();</span>
+<span class="fc" id="L220">                listViewMatrett.getItems().addAll(updatedIngredients);</span>
+<span class="fc" id="L221">            });</span>
+
+<span class="fc" id="L223">            ScaleTransition scaleUpLoginComplete = new ScaleTransition(</span>
+<span class="fc" id="L224">                Duration.millis(200), btnComplete);</span>
+<span class="fc" id="L225">            scaleUpLoginComplete.setToX(1.2);</span>
+<span class="fc" id="L226">            scaleUpLoginComplete.setToY(1.2);</span>
+    
+<span class="fc" id="L228">            ScaleTransition scaleDownLoginComplete = new ScaleTransition(</span>
+<span class="fc" id="L229">                Duration.millis(200), btnComplete);</span>
+<span class="fc" id="L230">            scaleDownLoginComplete.setToX(1.0);</span>
+<span class="fc" id="L231">            scaleDownLoginComplete.setToY(1.0);</span>
+    
+            // On mouse enter, scale up the button
+<span class="fc" id="L234">            btnComplete.setOnMouseEntered(e -&gt; scaleUpLoginComplete.playFromStart());</span>
+    
+            // On mouse exit, scale down the button
+<span class="pc" id="L237">            btnComplete.setOnMouseExited(e -&gt; scaleDownLoginComplete.playFromStart());</span>
+
+
+<span class="nc" id="L240">        } catch (Exception e) {</span>
+<span class="nc" id="L241">            showError(&quot;Failed to initialize: &quot; + e.getMessage());</span>
+<span class="nc" id="L242">            e.printStackTrace();</span>
+<span class="fc" id="L243">        }</span>
+<span class="fc" id="L244">    }</span>
+
+    private void initializeUiElements() {
+<span class="fc" id="L247">        choiceBoxPorsjon.setItems(porsjoner);</span>
+<span class="fc" id="L248">        choiceBoxMasure.setItems(measure);</span>
+<span class="fc" id="L249">        typeRecipe.setItems(lstTypeRecipe);</span>
+<span class="fc" id="L250">        typeRecipeView.setItems(lstTypeRecipeView);</span>
+
+<span class="fc" id="L252">        choiceBoxPorsjon.setValue(1);</span>
+<span class="fc" id="L253">        choiceBoxMasure.setValue(&quot;g&quot;);</span>
+<span class="fc" id="L254">        typeRecipeView.setValue(&quot;All&quot;);</span>
+<span class="fc" id="L255">        txtOutputBeskrivelse.setEditable(false);</span>
+<span class="fc" id="L256">    }</span>
+
+    private void updateDinners() throws Exception {
+<span class="fc" id="L259">        ArrayList&lt;Recipe&gt; recipes = model.getRecipeByStudentId();</span>
+<span class="fc" id="L260">        listViewMatretter.setItems(</span>
+<span class="fc" id="L261">            FXCollections.observableArrayList(</span>
+<span class="fc" id="L262">                recipes.stream().map(recipe -&gt; recipe.getNavn()).collect(Collectors.toList()))</span>
+        );
+<span class="fc" id="L264">    }</span>
+
+    /**
+     * Updates the ingredient list view with the current temporary ingredients.
+     */
+    private void updateIngredients() {
+<span class="fc" id="L270">        var ingredients = model.getTemp();</span>
+<span class="fc" id="L271">        lstIngredienser.setItems(</span>
+<span class="fc" id="L272">            FXCollections.observableArrayList(</span>
+<span class="fc" id="L273">            ingredients.stream()</span>
+<span class="pc" id="L274">                       .map(ingredient -&gt; ingredient.toString())</span>
+<span class="fc" id="L275">                       .collect(Collectors.toList()))</span>
+        );
+<span class="fc" id="L277">    }</span>
+
+    /**
+     * Handles the action of completing the addition of a dinner.
+     * Retrieves the dinner details from the input fields and adds the dinner to the model.
+     * Updates the dinner list view after adding the dinner.
+     *
+     * @throws Exception if there is an error during the addition of the dinner
+     */
+    @FXML
+    public void complete() throws Exception { 
+        try {
+<span class="fc" id="L289">            validateCompleteInput(); // Validate input before processing</span>
+<span class="fc" id="L290">            String name = inputMatrett.getText();</span>
+<span class="fc" id="L291">            String tutorial = inputBeskrivelse.getText();</span>
+<span class="fc" id="L292">            String portion = &quot;1&quot;;</span>
+<span class="fc" id="L293">            String type = typeRecipe.getValue();</span>
+<span class="fc" id="L294">            model.addRecipe(name, tutorial, portion, type);</span>
+<span class="fc" id="L295">            updateDinners();</span>
+<span class="fc" id="L296">            inputMatrett.setText(&quot;&quot;);</span>
+<span class="fc" id="L297">            inputMatrett.setPromptText(&quot;matrett&quot;);</span>
+<span class="fc" id="L298">            inputBeskrivelse.setText(&quot;&quot;);</span>
+<span class="fc" id="L299">            inputBeskrivelse.setPromptText(&quot;beskrivelse av retten&quot;);</span>
+<span class="fc" id="L300">            lstIngredienser.getItems().clear();</span>
+<span class="nc" id="L301">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L302">            showError(&quot;An error occurred while adding the recipe: &quot; + e.getMessage());</span>
+<span class="fc" id="L303">        }</span>
+<span class="fc" id="L304">    }</span>
+
+    /**
+     * Handles the action of adding an ingredient.
+    * Retrieves the ingredient details from the input fields, validates them, 
+    * and saves them temporarily. Updates the ingredient list view after adding the ingredient.
+     *
+     * @throws IllegalArgumentException if any of the input fields are empty
+     */
+    @FXML
+    public void leggTilKlikk() {
+        try {
+<span class="fc" id="L316">            validateIngredientInput(); // Validate input before adding</span>
+<span class="fc" id="L317">            String name = txtIngrediesToAdd.getText();</span>
+<span class="fc" id="L318">            String amount = txtMengdeToAdd.getText();</span>
+<span class="fc" id="L319">            String unit = choiceBoxMasure.getValue();</span>
+<span class="pc bpc" id="L320" title="3 of 6 branches missed.">            if (name.isEmpty() || amount.isEmpty() || unit == null) {</span>
+<span class="nc" id="L321">                throw new IllegalArgumentException(&quot;empty String&quot;);</span>
+            }
+<span class="fc" id="L323">            model.saveToTemp(name, amount, unit);</span>
+<span class="fc" id="L324">            txtIngrediesToAdd.setText(&quot;&quot;);</span>
+<span class="fc" id="L325">            txtMengdeToAdd.setText(&quot;&quot;);</span>
+<span class="fc" id="L326">            updateIngredients();</span>
+<span class="nc" id="L327">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L328">            this.showError(e.getMessage());</span>
+<span class="fc" id="L329">        }</span>
+<span class="fc" id="L330">    }</span>
+
+    private void showError(String message) {
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">        if (errorText != null) {</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">            if (&quot;empty String&quot;.equals(message)) {</span>
+<span class="nc" id="L335">                errorText.setText(&quot;Vennligst fyll ut alle feltene før du går videre.&quot;);</span>
+            } else {
+<span class="fc" id="L337">                errorText.setText(&quot;En feil oppstod: &quot; + message);</span>
+            }
+<span class="fc" id="L339">            errorPane.setVisible(true);</span>
+        } else {
+<span class="nc" id="L341">            System.err.println(&quot;Error occurred: &quot; + message); // Fallback log for debugging</span>
+        }
+<span class="fc" id="L343">    }</span>
+
+    /**
+     * Deletes the selected dinner from the list.
+     *
+     * @param event the ActionEvent triggered by the delete action
+     */
+    public void delete(ActionEvent event)  {
+        try {
+            // Get the selected dinner from the ListView
+<span class="fc" id="L353">            String currentRecipe = listViewMatretter.getSelectionModel().getSelectedItem();</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">            if (currentRecipe == null) {</span>
+<span class="fc" id="L355">                showError(&quot;No dinner selected for deletion.&quot;);</span>
+<span class="fc" id="L356">                return;</span>
+            }
+    
+            // Remove the dinner from the model
+<span class="fc" id="L360">            model.removeRecipe(currentRecipe);</span>
+    
+            // Update the ListView to reflect the deletion
+<span class="fc" id="L363">            updateDinners();</span>
+<span class="fc" id="L364">            txtOutputMatrett.setText(&quot;&quot;);</span>
+<span class="fc" id="L365">            txtOutputBeskrivelse.setText(&quot;&quot;);</span>
+<span class="fc" id="L366">            listViewMatrett.getItems().clear();</span>
+    
+            
+<span class="nc" id="L369">        } catch (Exception e) {</span>
+<span class="nc" id="L370">            showError(&quot;Error occurred while deleting dinner: &quot; + e.getMessage());</span>
+<span class="fc" id="L371">        }</span>
+
+<span class="fc" id="L373">    }</span>
+
+    /**
+     * Handles a logout event that takes the user to login screen.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    @FXML
+    public void logOut(ActionEvent event) throws IOException {
+
+<span class="fc" id="L384">        FXMLLoader loader = new FXMLLoader(getClass()</span>
+<span class="fc" id="L385">            .getResource(&quot;/fxui/loginpage/Login.fxml&quot;));</span>
+<span class="fc" id="L386">        loader.setController(new LoginController());</span>
+<span class="fc" id="L387">        Parent root = loader.load();</span>
+
+<span class="fc" id="L389">        Stage stage = (Stage) (optionMenu).getScene().getWindow();</span>
+
+<span class="fc" id="L391">        UserSession.logOff();</span>
+<span class="fc" id="L392">        stage.setScene(new Scene(root));</span>
+<span class="fc" id="L393">        stage.show();</span>
+<span class="fc" id="L394">    }</span>
+
+    @FXML
+    private void hideError(ActionEvent event) {
+<span class="nc" id="L398">        errorPane.setVisible(false);</span>
+<span class="nc" id="L399">    }</span>
+
+
+    /**
+     * Updates the dinner list view with the filtered recipes based on the selected type.
+     */
+    private void updateFilteredDinners() {
+<span class="fc" id="L406">        String selectedType = typeRecipeView.getSelectionModel().getSelectedItem();</span>
+
+        // Get all recipes
+<span class="fc" id="L409">        ArrayList&lt;Recipe&gt; recipes = model.getRecipes();</span>
+
+        // Filter recipes if a specific type is selected
+        List&lt;Recipe&gt; filteredDinners;
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">        if (&quot;All&quot;.equals(selectedType)) {</span>
+<span class="nc" id="L414">            filteredDinners = recipes; // No filtering, show all recipes</span>
+        } else {
+<span class="fc" id="L416">            filteredDinners = recipes.stream()</span>
+<span class="fc" id="L417">                .filter(recipe -&gt; recipe.getType().equals(selectedType))</span>
+<span class="fc" id="L418">                .collect(Collectors.toList());</span>
+        }
+
+        // Update the ListView with the filtered recipes
+<span class="fc" id="L422">        listViewMatretter.setItems(FXCollections.observableArrayList(</span>
+<span class="fc" id="L423">            filteredDinners.stream().map(Recipe::getNavn).collect(Collectors.toList())));</span>
+<span class="fc" id="L424">    }</span>
+
+    private void validateCompleteInput() {
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">        if (inputMatrett.getText().isEmpty()</span>
+<span class="pc bpc" id="L428" title="1 of 2 branches missed.">            || inputBeskrivelse.getText().isEmpty()</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">            || typeRecipe.getValue() == null) {</span>
+<span class="nc" id="L430">            throw new IllegalArgumentException(&quot;All fields must be filled out to add a recipe.&quot;);</span>
+        }
+<span class="fc" id="L432">    }</span>
+
+    private void validateIngredientInput() {
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">        if (txtIngrediesToAdd.getText().isEmpty()</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">            || txtMengdeToAdd.getText().isEmpty()</span>
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">            || choiceBoxMasure.getValue() == null) {</span>
+<span class="nc" id="L438">            throw new IllegalArgumentException(&quot;All fields must be filled out for an ingredient.&quot;);</span>
+        }
+        try {
+<span class="fc" id="L441">            Double.parseDouble(txtMengdeToAdd.getText());</span>
+<span class="nc" id="L442">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L443">            throw new IllegalArgumentException(&quot;Amount must be a valid number.&quot;);</span>
+<span class="fc" id="L444">        }</span>
+<span class="fc" id="L445">    }</span>
+
+    public Model getModel() {
+<span class="fc" id="L448">        return this.model;</span>
+    } 
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
