@@ -1,0 +1,23 @@
+@startuml SequenceDiagram1
+actor Bruker
+boundary GUI
+control Controller
+entity Model
+database SavedRecipes
+
+Bruker -> GUI: Åpner kokebok
+GUI -> Controller: Varsler om åpning
+Controller -> Model: Be om oppskrifter fra JSON-fil
+Model -> SavedRecipes: Sender oppskriftsdata
+SavedRecipes --> Model: Returnerer oppskriftsdata
+Model --> Controller: Oppdater model med data
+Controller --> GUI: Fyll GUI med oppskriftsdata
+
+Bruker -> GUI: Redigerer oppskrift
+GUI -> Controller: Sender redigert data
+Controller -> Model: Oppdater model med ny data
+Model -> SavedRecipes: Lagrer oppdaterte data til JSON-fil
+SavedRecipes --> Model: Lagring fullført
+Model --> Controller: Bekreft lagring
+Controller --> GUI: Vis lagringsbekreftelse
+@enduml

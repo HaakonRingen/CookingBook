@@ -1,0 +1,58 @@
+@startuml PackageDiagram
+
+skinparam package{
+    BackgroundColor lightblue
+}
+
+component "Core" {
+    folder core{
+    }
+}
+
+component "java-fx"{
+  package "fxui"{
+   folder loginpage{
+    }
+    folder mainpage{
+    }
+    folder newuserpage{
+    }
+    folder remote{
+    }
+  }
+   
+}
+
+component "Persistence"{
+  folder "persistence"{
+  }
+}
+
+component "Springboot (REST API)"{
+  folder restserver{
+  folder repository{
+  folder "repository"{
+  }
+  }
+ 
+  }
+}
+
+component "JSON" {
+}
+component "Spring Boot" as springboot{
+}
+
+"core" <.. "fxui" 
+"core" <.. "persistence" 
+"core" <.. "restserver" 
+"persistence" <... "restserver" 
+"persistence" ..> "JSON"
+"remote" ..> "restserver"
+"restserver" ..> springboot
+"remote" <.. "loginpage"
+"remote" <.. "mainpage"
+"remote" <.. "newuserpage"
+
+@enduml
+

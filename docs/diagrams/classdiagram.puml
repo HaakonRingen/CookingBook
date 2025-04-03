@@ -1,0 +1,116 @@
+@startuml ClassDiagram
+
+class Book {
+  -recipes: List<Recipes> 
+  
+  +getRecipes(): List<Recipe>
+  +addRecipe(Recipe): void
+  +getRecipe(Recipe): Recipe
+  +getRecipe(String): Recipe
+  +removeRecipe(Recipe): void
+  +removeRecipe(String): void
+  +setRecipes(List<Recipe>): void
+  
+}
+
+interface Iterable<T>{
+  +iterator(): Iterator<T>
+  +forEach(Consumer<T>): void
+  +spliterator(): spliterator<T>
+}
+
+class Recipe{
+  #navn: String
+  #tutorial: String
+  #portions: int
+  #type: String
+  #ingredients: List<Ingredient>
+  
+  +setPortions(int): void
+  +getPortions(): int
+  +setNavn(String): void
+  +addIngredient(Ingredient): void
+  +setIngredients(List<Ingredient>): void
+  +getNavn(): String
+  +getTutorial(): String
+  +getIngredients(): List<Ingredient>
+  +removeLastIngredient(): void
+  +getType(): String
+  +getIngredientsForPortions(int): List<Ingredient>
+  +toString(): String
+  +iterator(): Iterator<Ingredient>
+  
+}
+class Ingredient{
+  -ingredientName: String
+  -amount: float
+  -unit: String
+  
+  +getIngredientName(): String
+  +setIngredientName(String): void
+  +getAmount(): float
+  +setAmount(float): void
+  +getUnit(): String
+  +setUnit(String): void
+  +getAmountWithUnit(): String
+  +toString(): String
+  
+  
+}
+class Lunch{
+}
+class Dinner{
+}
+class Dessert{
+}
+class Breakfast{
+}
+
+
+class Student{
+  -firstname: String
+  -lastname: String
+  -studentID: int
+  -password: String
+  -coockingbook: Book
+  
+  +setFirstName(String): void
+  +setLastName(String): void
+  +setCoockingBook(Book): void
+  +getFullName(): String
+  +getPassword(): String
+  +getFirstName(): String
+  +getLastName(): String
+  +getId(): int
+  +getCoockingBook(): Book
+  +toString(): String
+  
+}
+
+class Users{
+  -users: List<Student>
+  
+  +addUser(Student): void
+  +getUser(int): Student
+  +getUsers(): List<Student>
+  +setUsers(List<Student>): void
+  +iterator(): Iterator<Student>
+  +toString(): String
+}
+
+
+Users --> Student
+Users ..|> Iterable
+Lunch  --|> Recipe
+Dinner --|> Recipe
+Dessert --|> Recipe
+Breakfast --|> Recipe
+Recipe ..|> Iterable
+Recipe "1" --> "0..*" Ingredient
+Book ..|> Iterable
+Book "1" --> "0..*" Recipe
+Student "1" --> "1" Book
+
+
+
+@enduml

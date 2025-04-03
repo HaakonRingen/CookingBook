@@ -1,0 +1,36 @@
+@startuml SequenceDiagram2
+
+actor User
+participant UIController
+participant CookingBookRemoteAccess
+
+box "REST API" #LightBlue
+    participant APIController
+    participant Service
+    participant "Repository / Persistence" as Repo
+end box
+
+User -> UIController: adds recipe
+
+UIController -> CookingBookRemoteAccess: updateStudent()
+
+CookingBookRemoteAccess -> APIController: Send http request to REST API
+
+APIController -> Service: updateStudent() 
+
+Service -> Repo: save(updatedStudent)
+
+Repo --> Service: load()
+
+Service --> APIController: getAllUsers()
+
+APIController --> CookingBookRemoteAccess: getAllUsers()
+
+CookingBookRemoteAccess --> UIController: getRecipes()
+
+UIController --> User: shows updated recipes
+
+
+
+
+@enduml
