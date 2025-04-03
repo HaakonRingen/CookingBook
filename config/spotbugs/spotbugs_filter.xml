@@ -1,0 +1,112 @@
+<FindBugsFilter>
+    <Match>
+        <Class name="core.Book"/>
+        <Method name="getRecipes"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="core.Book"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="core.Recipe"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="core.Student"/>
+        <Method name="getCookingbook"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="core.Student"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="core.Users"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="restserver.repository.CookingBookRepository"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="restserver.CookingBookController"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="fxui.loginpage.LoginController"/>
+        <Constructor/>
+        <Method name="setAccess"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="fxui.loginpage.LoginController"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="fxui.newuserpage.NewUserController"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.mainpage.Controller"/>
+        <Method name="getModel"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="fxui.mainpage.Controller"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="fxui.mainpage.Controller"/>
+        <Method name="setModel"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.mainpage.Model"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="fxui.mainpage.Model"/>
+        <Method name="setAccess"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.mainpage.Model"/>
+        <Method name="getAccess"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.newuserpage.NewUserController"/>
+        <Method name="setModel"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.newuserpage.NewUserModel"/>
+        <Method name="setAccess"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="fxui.remote.CookingBookRemoteAccess"/>
+        <Constructor/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+</FindBugsFilter>
