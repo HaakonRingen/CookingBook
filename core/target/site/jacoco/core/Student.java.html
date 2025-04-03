@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Student.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Student.java</span></div><h1>Student.java</h1><pre class="source lang-java linenums">package core;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents a student with a first name, last name, student ID, password, and a cooking book.
+ */
+@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
+public final class Student {
+
+    private String firstname;
+    private String lastname;
+    private int studentId;
+    private String password;
+    private Book cookingbook;
+
+    /**
+     * Constructs a new Student with the specified name, ID, password, and cooking book.
+     *
+     * @param name the full name of the student
+     * @param id the student ID
+     * @param password the password of the student
+     * @param cookingBook the cooking book of the student
+     */
+    @JsonCreator
+    public Student(@JsonProperty(&quot;name&quot;) String name,
+        @JsonProperty(&quot;ID&quot;) int id,
+        @JsonProperty(&quot;password&quot;) String password,
+<span class="fc" id="L31">        @JsonProperty(&quot;cookingbook&quot;) Book cookingBook) {</span>
+<span class="fc" id="L32">        String [] names = name.split(&quot; &quot;);</span>
+<span class="fc" id="L33">        this.firstname = names[0];</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        this.lastname = names.length &gt; 1 ? names[1] : &quot;&quot;;</span>
+<span class="fc" id="L35">        this.studentId = id;</span>
+<span class="fc" id="L36">        this.password = password;</span>
+<span class="fc" id="L37">        this.cookingbook = cookingBook;</span>
+<span class="fc" id="L38">    }</span>
+
+<span class="fc" id="L40">    public Student() {}</span>
+
+    /**
+     * Constructs a new Student with the specified first name, last name, ID, and password.
+     *
+     * @param firstname the first name of the student
+     * @param lastname the last name of the student
+     * @param studentId the student ID
+     * @param password the password of the student
+     */
+<span class="fc" id="L50">    public Student(String firstname, String lastname, int studentId, String password) {</span>
+<span class="pc bpc" id="L51" title="1 of 4 branches missed.">        if (firstname == null || firstname.isEmpty()) {</span>
+<span class="fc" id="L52">            throw new IllegalArgumentException(&quot;First name cannot be null or empty&quot;);</span>
+        }
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">        if (lastname == null || lastname.isEmpty()) {</span>
+<span class="fc" id="L55">            throw new IllegalArgumentException(&quot;Last name cannot be null or empty&quot;);</span>
+        }
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (String.valueOf(studentId).length() != 6) {</span>
+<span class="fc" id="L58">            throw new IllegalArgumentException(&quot;Student ID must be a 6-digit number&quot;);</span>
+        }
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">        if (password == null || password.isEmpty()) {</span>
+<span class="fc" id="L61">            throw new IllegalArgumentException(&quot;Password cannot be null or empty&quot;);</span>
+        }
+        
+        
+<span class="fc" id="L65">        this.firstname = firstname;</span>
+<span class="fc" id="L66">        this.lastname = lastname;</span>
+<span class="fc" id="L67">        this.studentId = studentId;</span>
+<span class="fc" id="L68">        this.password = password;</span>
+<span class="fc" id="L69">        this.cookingbook = new Book();</span>
+<span class="fc" id="L70">    }</span>
+    // Setters
+
+    /**
+     * Sets the first name of the student.
+     *
+     * @param firstname the first name to set
+     * @throws IllegalArgumentException if the first name is null or empty
+     */
+    public void setFirstName(String firstname) {
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">        if (firstname == null || firstname.isEmpty()) {</span>
+<span class="fc" id="L81">            throw new IllegalArgumentException(&quot;First name cannot be null or empty&quot;);</span>
+        }
+<span class="fc" id="L83">        this.firstname = firstname;</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Sets the last name of the student.
+     *
+     * @param lastname the last name to set
+     * @throws IllegalArgumentException if the last name is null or empty
+     */
+    public void setLastName(String lastname) {
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">        if (lastname == null || lastname.isEmpty()) {</span>
+<span class="fc" id="L94">            throw new IllegalArgumentException(&quot;Last name cannot be null or empty&quot;);</span>
+        }
+<span class="fc" id="L96">        this.lastname = lastname;</span>
+<span class="fc" id="L97">    }</span>
+
+    public void setCookingbook(Book cookingbook) {
+<span class="fc" id="L100">        this.cookingbook =  new Book(cookingbook);</span>
+<span class="fc" id="L101">    }</span>
+
+    // Getters
+    @JsonProperty(&quot;name&quot;)
+    public String getFullName() {
+<span class="fc" id="L106">        return firstname + &quot; &quot; + lastname;</span>
+    }
+
+    @JsonProperty(&quot;password&quot;)
+    public String getPassword() {
+<span class="fc" id="L111">        return password;</span>
+    }
+
+    public String getFirstName() {
+<span class="fc" id="L115">        return firstname;</span>
+    }
+
+    public String getLastName() {
+<span class="fc" id="L119">        return lastname;</span>
+    }
+
+    @JsonProperty(&quot;ID&quot;)
+    public int getId() {
+<span class="fc" id="L124">        return studentId;</span>
+    }
+    
+    @JsonProperty(&quot;cookingbook&quot;)
+    public Book getCookingbook() {
+<span class="fc" id="L129">        return cookingbook;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L134">        return String.valueOf(studentId);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

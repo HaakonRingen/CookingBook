@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Recipe.java</span></div><h1>Recipe.java</h1><pre class="source lang-java linenums">package core;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.stream.Collectors;
+
+/**
+ * Represents a recipe with a name, tutorial, type, and a list of ingredients.
+ */
+@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
+public class Recipe implements Iterable&lt;Ingredient&gt; {
+    
+    protected String navn; // Name of the dinner
+<span class="fc" id="L17">    protected String tutorial = &quot;&quot;; // Instructions for the dinner</span>
+<span class="fc" id="L18">    protected int portions = 1; // Number of portions</span>
+<span class="fc" id="L19">    protected String type = &quot;&quot;; // Type of recipe</span>
+
+    protected ArrayList&lt;Ingredient&gt; ingredients; // List of ingredients
+
+    /**
+     * Constructs a new Recipe object with the specified name, tutorial, type, and ingredients.
+     *
+     * @param navn the name of the recipe
+     * @param tutorial the tutorial text for the recipe
+     * @param type the type of the recipe
+     * @param ingredients the list of ingredients for the recipe
+     */
+    @JsonCreator
+    public Recipe(@JsonProperty(&quot;name&quot;) String navn,
+        @JsonProperty(&quot;tutorial&quot;) String tutorial,
+        @JsonProperty(&quot;type&quot;) String type,
+<span class="fc" id="L35">        @JsonProperty(&quot;ingredients&quot;) ArrayList&lt;Ingredient&gt; ingredients) {</span>
+<span class="fc" id="L36">        this.navn = navn;</span>
+<span class="fc" id="L37">        this.tutorial = tutorial;</span>
+<span class="fc" id="L38">        this.type = type;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (ingredients == null) {</span>
+<span class="fc" id="L40">            this.ingredients = new ArrayList&lt;Ingredient&gt;();</span>
+        } else {
+<span class="fc" id="L42">            this.ingredients = ingredients;</span>
+        }
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Constructs a new Recipe object with the specified name.
+     * Initializes the list of ingredients.
+     *
+     * @param name the name of the recipe
+     * @throws IllegalArgumentException if the name is null
+     */
+<span class="fc" id="L53">    public Recipe(String name) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (name != null) {</span>
+<span class="fc" id="L55">            this.navn = name;</span>
+        }
+
+<span class="fc" id="L58">        ingredients = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Sets the number of portions for the dinner.
+     *
+     * @param portions the number of portions
+     * @throws IllegalArgumentException if the number of portions is less than or equal to zero
+     */
+    public void setPortions(int portions) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (portions &lt;= 0) {</span>
+<span class="fc" id="L69">            throw new IllegalArgumentException(&quot;Portions can't be negative or zero&quot;);</span>
+        }
+<span class="fc" id="L71">        this.portions = portions;</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Returns the number of portions for the dinner.
+     *
+     * @return the number of portions
+     */
+    public int getPortions() {
+<span class="fc" id="L80">        return portions;</span>
+    }
+
+    /**
+     * Sets the name of the dinner.
+     *
+     * @param navn the name of the dinner
+     * @throws IllegalArgumentException if the name is null
+     */
+    public void setNavn(String navn) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (navn == null) {</span>
+<span class="fc" id="L91">            throw new IllegalArgumentException(&quot;Name can't be null&quot;);</span>
+        }
+<span class="fc" id="L93">        this.navn = navn;</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Sets the tutorial text for the dinner.
+     *
+     * @param tutorial the tutorial text
+     * @throws IllegalArgumentException if the tutorial text is null
+     */
+    public void setTutorial(String tutorial) {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (tutorial == null) {</span>
+<span class="fc" id="L104">            throw new IllegalArgumentException(&quot;Tutorial text can't be null&quot;);</span>
+        }
+<span class="fc" id="L106">        this.tutorial = tutorial;</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Adds a new ingredient to the list.
+     *
+     * @param ingredient the Ingredient object to be added
+     * @throws IllegalArgumentException if the ingredient is null
+     */
+    public void addIngredient(Ingredient ingredient) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (ingredient == null) {</span>
+<span class="fc" id="L117">            throw new IllegalArgumentException(&quot;Ingredient can't be null&quot;);</span>
+        }
+<span class="fc" id="L119">        ingredients.add(ingredient);</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Sets the ingredient list.
+     *
+     * @param ingredients the new list of ingredients
+     * @throws IllegalArgumentException if the ingredients list is null
+     */
+    public void setIngredients(ArrayList&lt;Ingredient&gt; ingredients) {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (ingredients == null) {</span>
+<span class="fc" id="L130">            throw new IllegalArgumentException(&quot;Ingredients list can't be null&quot;);</span>
+        }
+<span class="fc" id="L132">        this.ingredients = new ArrayList&lt;&gt;(ingredients);</span>
+<span class="fc" id="L133">    }</span>
+
+    /**
+     * Returns the name of the recipe.
+     *
+     * @return the name of the recipe
+     */
+    @JsonProperty(&quot;name&quot;)
+    public String getNavn() {
+<span class="fc" id="L142">        return navn;</span>
+    }
+
+    /**
+     * Returns the tutorial text for the recipe.
+     *
+     * @return the tutorial text
+     */
+    @JsonProperty(&quot;tutorial&quot;)
+    public String getTutorial() {
+<span class="fc" id="L152">        return tutorial;</span>
+    }
+
+    /**
+     * Returns the list of ingredients.
+     *
+     * @return a new ArrayList containing all ingredients
+     */
+    @JsonProperty(&quot;ingredients&quot;)
+    public ArrayList&lt;Ingredient&gt; getIngredients() {
+<span class="fc" id="L162">        return new ArrayList&lt;&gt;(ingredients);      </span>
+    }
+
+    /**
+     * Removes the last ingredient in the list.
+     */
+    public void removeLastIngredient() {
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (ingredients.size() &gt; 0) {</span>
+<span class="fc" id="L170">            ingredients.remove(ingredients.size() - 1);</span>
+        }
+<span class="fc" id="L172">    }</span>
+
+    @JsonProperty(&quot;type&quot;)
+    public String getType() {
+<span class="fc" id="L176">        return type;</span>
+    }
+
+    /**
+     * Retrieves ingredients adjusted for the specified number of portions.
+     *
+     * @param portions the number of portions to adjust for
+     * @return a list of adjusted ingredients
+     */
+    public ArrayList&lt;Ingredient&gt; getIngredientsForPortions(int portions) {
+<span class="fc" id="L186">        ArrayList&lt;Ingredient&gt; output = new ArrayList&lt;&gt;(ingredients);</span>
+<span class="fc" id="L187">        return output.stream()</span>
+<span class="fc" id="L188">            .map(ingredient -&gt; {</span>
+<span class="fc" id="L189">                Ingredient scaled = new Ingredient(</span>
+<span class="fc" id="L190">                    ingredient.getIngredientName(), </span>
+<span class="fc" id="L191">                    ingredient.getAmount(), </span>
+<span class="fc" id="L192">                    ingredient.getUnit()</span>
+                );
+<span class="fc" id="L194">                scaled.setAmount(scaled.getAmount() * portions / this.portions);</span>
+<span class="fc" id="L195">                return scaled;</span>
+            })
+<span class="fc" id="L197">            .collect(Collectors.toCollection(ArrayList::new));</span>
+    }
+
+    /**
+     * Returns a string of a complete recipe.
+     *
+     * @return a string representation of the recipe
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L207">        StringBuilder builder = new StringBuilder();</span>
+<span class="fc" id="L208">        builder.append(navn).append(&quot;\t&quot;).append(type).append(&quot;\t&quot;).append(tutorial).append(&quot;\t&quot;);</span>
+
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Ingredient ingredient : ingredients) {</span>
+<span class="fc" id="L211">            builder.append(ingredient.toString()).append(&quot;, &quot;);</span>
+<span class="fc" id="L212">        }</span>
+
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (builder.length() &gt; 0) {</span>
+<span class="fc" id="L215">            builder.setLength(builder.length() - 2);</span>
+        }
+
+<span class="fc" id="L218">        return builder.toString();</span>
+        // return navn + &quot;\t&quot;  + type + &quot;\t&quot; + tutorial + &quot;\t&quot; + ingredients;
+    }
+    
+    /**
+    * Returns an iterator over elements of type {@code Ingredient}.
+    *
+    * @return an Iterator.
+    */
+    @Override
+    public Iterator&lt;Ingredient&gt; iterator() {
+<span class="nc" id="L229">        return ingredients.iterator();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

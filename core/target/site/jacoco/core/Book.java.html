@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Book.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Book.java</span></div><h1>Book.java</h1><pre class="source lang-java linenums">
+package core;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * Represent a collection of dinners in the cookbook.
+ */
+@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
+public class Book implements Iterable&lt;Recipe&gt; {
+
+    private ArrayList&lt;Recipe&gt; recipes; // List of dinners
+
+<span class="fc" id="L18">    public Book() {</span>
+<span class="fc" id="L19">        recipes = new ArrayList&lt;&gt;(); // Initialize dinner list</span>
+<span class="fc" id="L20">    }</span>
+    /**
+     * Makes a copy of a cookbook.
+     *
+     * @param book the Book object to be copied
+     * 
+     */
+
+<span class="fc" id="L28">    public Book(Book book) {</span>
+
+<span class="fc" id="L30">        this.recipes = book.getRecipes();</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Makes a copy of a recipe.
+     *
+     * @param recipes the recipes to be copied
+     * 
+     */
+    @JsonCreator
+<span class="fc" id="L40">    public Book(@JsonProperty(&quot;recipes&quot;) ArrayList&lt;Recipe&gt; recipes) {</span>
+<span class="fc" id="L41">        this.recipes = recipes;</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Returns a list of all dinners in the cookbook.
+     *
+     * @return a new ArrayList containing all dinners
+     */
+    @JsonProperty(&quot;recipes&quot;)
+    public ArrayList&lt;Recipe&gt; getRecipes() {
+<span class="fc" id="L51">        return recipes;</span>
+    }
+
+    
+    /**
+     * Adds a new recipe to the cookbook.
+     *
+     * @param recipe the Dinner object to be added
+     * @throws IllegalArgumentException if the dinner is null
+     */
+    public void addRecipe(Recipe recipe) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (recipe == null) {</span>
+<span class="fc" id="L63">            throw new IllegalArgumentException(&quot;Dinner can't be null&quot;);</span>
+        }
+<span class="fc" id="L65">        recipes.add(recipe);</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Gets a recipe from the cookbook by matching the given Dinner object.
+     *
+     * @param recipe the Dinner object to be matched
+     * @return the matching Dinner object or null if no match is found
+     */
+    public Recipe getRecipe(Recipe recipe) {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (Recipe r : recipes) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (r.equals(recipe)) {</span>
+<span class="fc" id="L77">                return r;</span>
+            }
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">        return null;</span>
+    }
+
+    /**
+     * Get a recipe from the cookbook by its name.
+     *
+     * @param name the name of the dinner
+     * @return the matching Dinner object or null if no match is found
+     */
+    public Recipe getRecipe(String name) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (Recipe recipe : recipes) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (recipe.getNavn().equals(name)) {</span>
+<span class="fc" id="L92">                return recipe;</span>
+            }
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        return null;</span>
+    }
+
+    /**
+     * Removes a recipe from the cookbook by matching the given recipe object.
+     *
+     * @param recipe the recipe object to be removed
+     * @throws IllegalArgumentException if dinner is null
+     */
+    public void removeRecipe(Recipe recipe) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (recipe == null) {</span>
+<span class="fc" id="L106">            throw new IllegalArgumentException(&quot;Dinner can't be null&quot;);</span>
+        }
+<span class="fc" id="L108">        recipes.remove(recipe);</span>
+<span class="fc" id="L109">    }</span>
+
+    /**
+     * Removes a recipe from the cookbook by its name.
+     *
+     * @param name the name of the recipe to be removed
+     * @throws IllegalArgumentException if the dinner is not found
+     */
+    public void removeRecipe(String name) {
+<span class="fc" id="L118">        Recipe recipe = getRecipe(name);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (recipe == null) {</span>
+<span class="fc" id="L120">            throw new IllegalArgumentException(&quot;Dinner not found&quot;);</span>
+        }
+<span class="fc" id="L122">        recipes.remove(recipe);</span>
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * Sets the entire list of recipe in the cookbook.
+     *
+     * @param recipes the new list of recipes
+     */
+    public void setRecipes(ArrayList&lt;Recipe&gt; recipes) {
+<span class="fc" id="L131">        this.recipes = new ArrayList&lt;&gt;(recipes);</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Returns an iterator over elements of type {@code Dinner}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator&lt;Recipe&gt; iterator() {
+<span class="fc" id="L141">        return recipes.iterator();</span>
+    }
+    
+    /**
+    * Returns a string representation of the Book object.
+    * The string representation consists of a list of recipes in the book.
+     *
+     * @return a string representation of the Book object
+    */
+    @Override
+    public String toString() {
+<span class="fc" id="L152">        return &quot;Book [recipes=&quot; + recipes + &quot;]&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

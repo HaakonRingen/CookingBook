@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ingredient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Ingredient.java</span></div><h1>Ingredient.java</h1><pre class="source lang-java linenums">package core;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents an ingredient used in a recipe.
+ */
+@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
+public final class Ingredient {
+
+    private String ingredientName;   // Name of the ingredient
+    private float amount;  // Quantity of the ingredient
+    private String unit;   // Unit of measurement
+
+    /**
+     * Constructs a new Ingredient object with the specified name, amount, and unit.
+     *
+     * @param ingredientName the name of the ingredient
+     * @param amount the quantity of the ingredient
+     * @param unit the unit of measurement for the ingredient
+     * @throws IllegalArgumentException if the name is null, the amount is less than or equal to 
+     *     zero, or the unit is invalid
+     */
+    @JsonCreator
+    public Ingredient(
+        @JsonProperty(&quot;ingredient&quot;) String ingredientName, 
+        @JsonProperty(&quot;amount&quot;) float amount, 
+        @JsonProperty(&quot;unit&quot;) String unit
+<span class="fc" id="L31">    ) {</span>
+
+<span class="pc bpc" id="L33" title="1 of 4 branches missed.">        if (ingredientName == null || ingredientName.isEmpty()) {</span>
+<span class="fc" id="L34">            throw new IllegalArgumentException(&quot;Name of the ingredient can't be null&quot;);</span>
+        }
+
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (amount &lt;= 0) {</span>
+<span class="fc" id="L38">            throw new IllegalArgumentException(&quot;Amount can't be negative or zero&quot;);</span>
+        }
+
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        if (unit == null || unit.isEmpty()) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;Unit can't be null&quot;);</span>
+        }
+
+        // Ensure unit is a valid option
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (!unit.equals(&quot;L&quot;) </span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;dl&quot;) </span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;ml&quot;) </span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">            &amp;&amp; !unit.equals(&quot;kg&quot;) </span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;g&quot;) </span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;ts&quot;) </span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;ss&quot;) </span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            &amp;&amp; !unit.equals(&quot;stk&quot;)) {</span>
+<span class="fc" id="L54">            throw new IllegalArgumentException(&quot;Unit must be L, dl, cl, ml, kg, g, ts, ss or stk&quot;);</span>
+        }
+        
+<span class="fc" id="L57">        this.ingredientName = ingredientName;</span>
+<span class="fc" id="L58">        this.amount = amount;</span>
+<span class="fc" id="L59">        this.unit = unit;</span>
+
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Returns the name of the ingredient.
+     *
+     * @return the name of the ingredient
+     */
+    @JsonProperty(&quot;ingredient&quot;)
+    public String getIngredientName() {
+<span class="fc" id="L70">        return ingredientName;</span>
+    }
+
+    /**
+     * Sets the name of the ingredient.
+     *
+     * @param name the new name of the ingredient
+     * @throws IllegalArgumentException if the name is null
+     */
+    public void setIngredientName(String name) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (name == null) {</span>
+<span class="fc" id="L81">            throw new IllegalArgumentException(&quot;Name of the ingredient can't be null&quot;);</span>
+        }
+<span class="fc" id="L83">        this.ingredientName = name;</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Returns the amount of the ingredient.
+     *
+     * @return the amount of the ingredient
+     */
+    @JsonProperty(&quot;amount&quot;)
+    public float getAmount() {
+<span class="fc" id="L93">        return amount;</span>
+    }
+
+    /**
+     * Sets the amount of the ingredient.
+     *
+     * @param amount the new amount of the ingredient
+     * @throws IllegalArgumentException if the amount is less than or equal to zero
+     */
+    public void setAmount(float amount) {
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (amount &lt;= 0) {</span>
+<span class="fc" id="L105">            throw new IllegalArgumentException(&quot;Amount can't be negative or zero&quot;);</span>
+        }
+<span class="fc" id="L107">        this.amount = amount;</span>
+<span class="fc" id="L108">    }</span>
+
+    /**
+     * Returns the unit of measurement for the ingredient.
+     *
+     * @return the unit of measurement
+     */
+    @JsonProperty(&quot;unit&quot;)
+    public String getUnit() {
+<span class="fc" id="L117">        return unit;</span>
+    }
+
+    /**
+     * Sets the unit of measurement for the ingredient.
+     *
+     * @param unit the new unit of measurement
+     * @throws IllegalArgumentException if the unit is invalid
+     */
+    public void setUnit(String unit) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (unit == null) {</span>
+<span class="fc" id="L128">            throw new IllegalArgumentException(&quot;Unit can't be null&quot;);</span>
+        }
+
+        // Ensure unit is valid
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (unit.equals(&quot;L&quot;) </span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">            || unit.equals(&quot;dl&quot;) </span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">            || unit.equals(&quot;ml&quot;) </span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            || unit.equals(&quot;kg&quot;) </span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">            || unit.equals(&quot;g&quot;) </span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">            || unit.equals(&quot;ts&quot;) </span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            || unit.equals(&quot;ss&quot;) </span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">            || unit.equals(&quot;stk&quot;)) {</span>
+<span class="fc" id="L140">            this.unit = unit;</span>
+        } else {
+<span class="fc" id="L142">            throw new IllegalArgumentException(&quot;Unit must be L, dl, cl, ml, kg, g, ts, ss or stk&quot;);</span>
+        }
+<span class="fc" id="L144">    }</span>
+
+    /**
+     * Returns a string representation of the amount and unit of the ingredient.
+     *
+     * @return a string in the format &quot;amount unit&quot;
+     */
+    public String getAmountWithUnit() {
+<span class="fc" id="L152">        return amount + &quot; &quot; + unit;</span>
+    }
+
+    /**
+     * Returns a string representation of the Ingredient object.
+     * The string representation consists of the name, amount, and unit of the ingredient.
+     *
+     * @return a string representation of the Ingredient object
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L163">        return ingredientName + &quot; &quot; + getAmountWithUnit();</span>
+    }   
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

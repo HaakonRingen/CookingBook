@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.3.4">
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Dinner.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Ingredient.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Users.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Dessert.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Book.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Breakfast.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Lunch.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Recipe.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/main/java/core/Student.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/test/java/core/UsersTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/test/java/core/IngredientTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/test/java/core/BookTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/test/java/core/StudentTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/core/src/test/java/core/RecipeTest.java">
+</file>
+</checkstyle>
