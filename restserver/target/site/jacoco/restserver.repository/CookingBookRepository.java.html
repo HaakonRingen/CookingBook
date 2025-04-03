@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookingBookRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">restserver</a> &gt; <a href="index.source.html" class="el_package">restserver.repository</a> &gt; <span class="el_source">CookingBookRepository.java</span></div><h1>CookingBookRepository.java</h1><pre class="source lang-java linenums">package restserver.repository;
+
+
+
+import core.Student;
+import core.Users;
+import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import persistence.UsersHandler;
+
+/**
+ * Repository class for handling cooking book related operations.
+ * 
+ * This class provides methods to load, retrieve, and save student information 
+ * associated with a cooking book application. It interacts with the {@link UsersHandler}
+ * for reading and writing data.
+ * 
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #load()}: Loads all students from the repository.&lt;/li&gt;
+ * &lt;li&gt;{@link #getStudent(int)}: Retrieves a specific student by their ID.&lt;/li&gt;
+ * &lt;li&gt;{@link #save(Users)}: Saves a collection of users to the repository.&lt;/li&gt;
+ * &lt;li&gt;{@link #save(Student)}: Saves an individual student, updating if already exists.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@Repository
+public class CookingBookRepository {
+    
+    private final UsersHandler handler;
+
+    @Autowired
+<span class="fc" id="L32">    public CookingBookRepository(UsersHandler handler) {</span>
+<span class="fc" id="L33">        this.handler = handler;</span>
+<span class="fc" id="L34">    }</span>
+
+    public ArrayList&lt;Student&gt; load() throws Exception {
+<span class="fc" id="L37">        return handler.read();</span>
+    }
+
+    /**
+     * Retrieves a student by their ID.
+     *
+     * @param id the ID of the student to retrieve
+     * @return the student with the specified ID, or null if not found
+     * @throws Exception if an error occurs during the operation
+     */
+    public Student getStudent(int id) throws Exception {
+<span class="fc" id="L48">        ArrayList&lt;Student&gt; students = handler.read();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (Student student : students) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (student.getId() == id) {</span>
+<span class="fc" id="L51">                return student;</span>
+            }
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">        return null;</span>
+    }
+
+    public void save(Users users) throws Exception {
+<span class="fc" id="L58">        handler.write(users);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Saves a student to the repository.
+     *
+     * @param student the student to save
+     * @throws Exception if an error occurs during the operation
+     */
+    public void save(Student student) throws Exception {
+<span class="fc" id="L68">        ArrayList&lt;Student&gt; students = handler.read();</span>
+<span class="fc" id="L69">        boolean studentExists = false;</span>
+
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (Student stud : students) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (stud.getId() == student.getId()) {</span>
+<span class="fc" id="L74">                students.set(students.indexOf(stud), student);</span>
+<span class="fc" id="L75">                studentExists = true;</span>
+<span class="fc" id="L76">                break;</span>
+            }
+<span class="fc" id="L78">        }</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (!studentExists) {</span>
+<span class="fc" id="L81">            students.add(student);</span>
+        }
+
+<span class="fc" id="L84">        handler.write(new Users(students));</span>
+<span class="fc" id="L85">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

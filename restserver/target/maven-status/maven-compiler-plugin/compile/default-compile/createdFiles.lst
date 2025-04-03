@@ -1,0 +1,6 @@
+restserver/CookingBookService.class
+module-info.class
+restserver/AppConfig.class
+restserver/RestServerApplication.class
+restserver/CookingBookController.class
+restserver/repository/CookingBookRepository.class

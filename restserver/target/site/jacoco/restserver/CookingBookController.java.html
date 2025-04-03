@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookingBookController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">restserver</a> &gt; <a href="index.source.html" class="el_package">restserver</a> &gt; <span class="el_source">CookingBookController.java</span></div><h1>CookingBookController.java</h1><pre class="source lang-java linenums">package restserver;
+
+import core.Student;
+import core.Users;
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+
+/**
+ * REST controller for managing cooking book users.
+ * 
+ * This controller provides endpoints for retrieving, adding, and updating users
+ * within the cooking book application.
+ * 
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #getAllUsers()}: Retrieves all users.&lt;/li&gt;
+ * &lt;li&gt;{@link #getUserById(int)}: Retrieves a user by ID.&lt;/li&gt;
+ * &lt;li&gt;{@link #getAccounts()}: Retrieves a list of user accounts with IDs and names.&lt;/li&gt;
+ * &lt;li&gt;{@link #addNewStudent(Student)}: Adds a new student.&lt;/li&gt;
+ * &lt;li&gt;{@link #updateStudent(int, Student)}: Updates an existing student by ID.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@RestController
+@RequestMapping(path = &quot;cookingbook/users&quot;)
+public class CookingBookController {
+
+    private final CookingBookService cookingBookService;
+
+    @Autowired
+<span class="fc" id="L39">    public CookingBookController(CookingBookService cookingBookService) {</span>
+<span class="fc" id="L40">        this.cookingBookService = cookingBookService;</span>
+<span class="fc" id="L41">    }</span>
+
+
+    @GetMapping
+    public ResponseEntity&lt;Users&gt; getAllUsers() throws Exception {
+<span class="fc" id="L46">        return ResponseEntity.ok(cookingBookService.getAllUsers());</span>
+    }
+
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param id the ID of the user to retrieve
+     * @return the user with the specified ID, or a 404 status if not found
+     * @throws Exception if an error occurs during retrieval
+     */
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Student&gt; getUserById(@PathVariable int id) throws Exception {
+<span class="fc" id="L58">        Student student = cookingBookService.getStudentById(id);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (student != null) {</span>
+<span class="fc" id="L60">            return ResponseEntity.ok(student);</span>
+        } else {
+<span class="fc" id="L62">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+
+    /**
+     * Retrieves a list of user accounts with their IDs and names.
+     *
+     * @return a {@code ResponseEntity} containing a map of user IDs to names
+     * @throws Exception if an error occurs during retrieval
+     */
+    @GetMapping(&quot;/accounts&quot;)
+    public ResponseEntity&lt;HashMap&lt;Integer, String&gt;&gt; getAccounts() throws Exception {
+<span class="fc" id="L74">        HashMap&lt;Integer, String&gt; accounts = cookingBookService.getAccounts();</span>
+<span class="fc" id="L75">        return ResponseEntity.ok(accounts);</span>
+    }
+
+    /**
+     * Adds a new student to the cooking book application.
+     *
+     * @param student the {@link Student} object to add
+     * @return a {@code ResponseEntity} with a 200 status upon successful addition
+     * @throws Exception if an error occurs during the operation
+     */
+    @PostMapping
+    public ResponseEntity&lt;Void&gt; addNewStudent(@RequestBody Student student) throws Exception {
+<span class="fc" id="L87">        cookingBookService.addNewStudent(student);</span>
+<span class="fc" id="L88">        return ResponseEntity.ok().build();</span>
+    }
+
+    /**
+     * Updates an existing student by their ID.
+     *
+     * @param id the ID of the student to update
+     * @param student the updated {@link Student} object
+     * @return a {@code ResponseEntity} with a 200 status upon successful update
+     * @throws Exception if an error occurs during the operation
+     */
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; updateStudent(@PathVariable int id, @RequestBody Student student)
+        throws Exception {
+<span class="fc" id="L102">        cookingBookService.updateStudent(id, student);</span>
+<span class="fc" id="L103">        return ResponseEntity.ok().build();</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

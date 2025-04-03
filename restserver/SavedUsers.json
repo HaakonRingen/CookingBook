@@ -1,0 +1,214 @@
+{
+  "users": [
+    {
+      "name": "Henning Kristiansen",
+      "ID": 588555,
+      "password": "admin",
+      "cookingbook": {
+        "recipes": [
+          {
+            "name": "Pasta",
+            "tutorial": "Veldig god pasta",
+            "type": "Dinner",
+            "ingredients": [
+              {
+                "ingredient": "Pasta",
+                "amount": 250.0,
+                "unit": "g"
+              },
+              {
+                "ingredient": "Salt",
+                "amount": 2.0,
+                "unit": "ts"
+              },
+              {
+                "ingredient": "Bacon",
+                "amount": 100.0,
+                "unit": "g"
+              }
+            ]
+          },
+          {
+            "name": "Tomatsuppe",
+            "tutorial": "Deilig suppe",
+            "type": "Lunch",
+            "ingredients": [
+              {
+                "ingredient": "Tomat",
+                "amount": 50.0,
+                "unit": "stk"
+              },
+              {
+                "ingredient": "Suppe",
+                "amount": 10.0,
+                "unit": "L"
+              }
+            ]
+          },
+          {
+            "name": "Noe digg",
+            "tutorial": "Deilig",
+            "type": "Dessert",
+            "ingredients": [
+              {
+                "ingredient": "Bra",
+                "amount": 10.0,
+                "unit": "L"
+              },
+              {
+                "ingredient": "Veldig bra",
+                "amount": 2.0,
+                "unit": "stk"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Henning Husmo",
+      "ID": 588556,
+      "password": "admin",
+      "cookingbook": {
+        "recipes": [
+          {
+            "name": "Ris",
+            "tutorial": "Sykt digg ris",
+            "type": "Dinner",
+            "ingredients": [
+              {
+                "ingredient": "Ris",
+                "amount": 125.0,
+                "unit": "g"
+              },
+              {
+                "ingredient": "Salt",
+                "amount": 3.0,
+                "unit": "ts"
+              },
+              {
+                "ingredient": "Pepper",
+                "amount": 1.0,
+                "unit": "ts"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Geir Aker",
+      "ID": 590592,
+      "password": "krakk",
+      "cookingbook": {
+        "recipes": [
+          {
+            "name": "middag",
+            "tutorial": "lag middagen",
+            "type": "Dinner",
+            "ingredients": [
+              {
+                "ingredient": "middag",
+                "amount": 500.0,
+                "unit": "g"
+              }
+            ]
+          },
+          {
+            "name": "mat",
+            "tutorial": "mat",
+            "type": "Dessert",
+            "ingredients": [
+              {
+                "ingredient": "mat",
+                "amount": 10.0,
+                "unit": "g"
+              },
+              {
+                "ingredient": "mer mat",
+                "amount": 20.0,
+                "unit": "g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Henning Bob",
+      "ID": 555555,
+      "password": "admin",
+      "cookingbook": {
+        "recipes": [
+          {
+            "name": "laks med tomat",
+            "tutorial": "tomat uten laks",
+            "type": "Lunch",
+            "ingredients": [
+              {
+                "ingredient": "tomat",
+                "amount": 10.0,
+                "unit": "g"
+              },
+              {
+                "ingredient": "laks",
+                "amount": 2.0,
+                "unit": "g"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Henning Test",
+      "ID": 123123,
+      "password": "admin",
+      "cookingbook": {
+        "recipes": [
+          {
+            "name": "laks med tomat",
+            "tutorial": "tomat uten laks",
+            "type": "Lunch",
+            "ingredients": [
+              {
+                "ingredient": "tomat",
+                "amount": 10.0,
+                "unit": "g"
+              },
+              {
+                "ingredient": "laks",
+                "amount": 2.0,
+                "unit": "g"
+              }
+            ]
+          },
+          {
+            "name": "kake",
+            "tutorial": "god kake",
+            "type": "Dinner",
+            "ingredients": [
+              {
+                "ingredient": "kake",
+                "amount": 1.0,
+                "unit": "stk"
+              }
+            ]
+          },
+          {
+            "name": "kake",
+            "tutorial": "god kake",
+            "type": "Dinner",
+            "ingredients": [
+              {
+                "ingredient": "kake",
+                "amount": 1.0,
+                "unit": "stk"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

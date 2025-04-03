@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.3.4">
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/java/restserver/CookingBookController.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/java/restserver/repository/CookingBookRepository.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/java/restserver/AppConfig.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/java/restserver/CookingBookService.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/java/restserver/RestServerApplication.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/test/java/restserver/repository/CookingBookRepositoryTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/test/java/restserver/CookingBookServiceTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/test/java/restserver/CookingBookControllerTest.java">
+</file>
+<file name="/Users/haakonringen/Documents/Dokumenter – Håkons MacBook Pro/Datatek/2. klasse/ITP/Gruppeprosjekt/gr2401/cookbook/restserver/src/main/resources/application.properties">
+</file>
+</checkstyle>
